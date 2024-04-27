@@ -1,0 +1,122 @@
+@import url(https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Jacquard+24&display=swap);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Bebas Neue", sans-serif;
+}
+
+.btn {
+  padding: 10px 30px;
+  border-radius: 300px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+@media (max-width: 600px) {
+  .btn {
+    padding: 5px 15px;
+  }
+}
+
+.btn-primary {
+  background: #17202A;
+  color: #fff;
+}
+.btn-primary:hover {
+  background: #050709;
+}
+
+.btn-black {
+  width: 100%;
+}
+
+.admin-main {
+  margin-left: 300px;
+}
+
+.page-title {
+  color: #17202A;
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.side-nav {
+  background: #17202A;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  padding-top: 40px 0;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-weight: 600px;
+  font-size: 20px;
+  border-bottom: 1px dashed grey;
+  padding-bottom: 15px;
+  margin-bottom: 40px;
+}
+.logo img {
+  height: 35px;
+  max-width: 80%;
+  margin-bottom: 10px;
+  margin-top: 15px;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  gap: 10px;
+  padding: 0 10px;
+}
+ul li a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 25px;
+  background-color: #1e2936;
+  border-radius: 3px;
+  font-weight: 200;
+  display: flex;
+  align-items: center;
+}
+ul li a:hover {
+  background-color: #090c10;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  transform: skewX(-15deg);
+}
+
+.logout button {
+  background: rgba(255, 0, 0, 0.3411764706);
+  border: 1px solid rgba(255, 255, 255, 0.4784313725);
+  position: absolute;
+  left: 15px;
+  bottom: 15px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 25px;
+  border-radius: 200px;
+  font-size: 14px;
+  transition: all 0.4s ease;
+  font-weight: 500;
+  font-style: italic;
+  cursor: pointer;
+}
+.logout button:hover {
+  background: red;
+}

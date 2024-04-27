@@ -1,0 +1,27 @@
+* 
+    margin: 0
+    padding: 0
+    box-sizing: border-box
+
+body
+  font-family: "Bebas Neue", sans-serif
+
+.btn
+  padding: 10px 30px
+  border-radius: 300px
+  border: none
+  outline: none
+  cursor: pointer
+  transition: 0.3s
+
+  @media (max-width: 600px)
+    padding: 5px 15px
+
+.btn-primary
+  background: $primary
+  color: #fff
+  &:hover
+    background: darken($primary, 10%)
+
+.btn-black
+  width: 100%
