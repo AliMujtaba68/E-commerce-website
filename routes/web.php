@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 
 Route::get('/', [PagesController::class, 'home'])->name('home');
@@ -35,5 +36,11 @@ Route::group(['prefix' => 'adminpanel', 'middleware' => 'admin'], function() {
         Route::put('{id}/update', [ProductController::class, 'update'])->name('adminpanel.products.update');
         Route::delete('{id}/delete', [ProductController::class, 'destroy'])->name('adminpanel.products.delete');
         Route::get('{id}/restore', [ProductController::class, 'restore'])->name('adminpanel.products.restore');
+    });
+
+      // categories
+        Route::group(['prefix' => 'categories'], function() {
+        Route::get('/', [CategoryController::class, 'index'])->name('adminpanel.categories');
+        Route::post('/create', [CategoryController::class, 'store'])->name('adminpanel.categories.store');
     });
 });
