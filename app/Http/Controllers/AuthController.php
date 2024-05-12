@@ -32,7 +32,7 @@ class AuthController extends Controller
             'password' => 'required|min:6|confirmed',
         ]);
 
-       $user = User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -50,7 +50,7 @@ class AuthController extends Controller
         public function postLogin(Request $request)
         {
             // Validate
-          $details =  $request->validate([
+        $details =  $request->validate([
                 'email' => 'required|email',
                 'password' => 'required',
             ]);

@@ -6,75 +6,44 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    // adminpanel
+    //adminpanel
+
     public function index()
     {
-        return view('layouts.admin.pages.products.index');
+        return view('admin.pages.products.index');
     }
 
-    // adminpanel/create
-
+    // create
     public function create()
     {
-        return view('layouts.admin.pages.products.create');
+        return "Create Product";
     }
 
-    // adminpanel/store
+    // store
 
     public function store(Request $request)
     {
-        return 'Store Product';
+        return "save products";
     }
 
-    // adminpanel/{id}
+    // edit
 
-    public function show($id)
+    public function edit()
     {
-        return 'Show Product ' . $id;
+        return "Edit Product";
     }
 
-     // adminpanel/edit
+    // update
 
-    public function edit($id)
+    public function update(Request $request)
     {
-        return view('layouts.admin.pages.products.edit');
+        return "Update Product";
     }
 
-    // adminpanel/update
-
-    public function update(Request $request, $id)
-    {
-        return 'Update Product ' . $id;
-    }
-
-    // adminpanel/delete
+    // delete
 
     public function destroy($id)
     {
-        return 'Delete Product ' . $id;
+        return "Delete Product";
     }
-
-    // adminpanel/{id}/restore
-
-    public function restore($id)
-    {
-        return 'Restore Product ' . $id;
-    }
-
-    // adminpanel/{id}/force-delete
-
-    public function forceDelete($id)
-    {
-        return 'Force Delete Product ' . $id;
-    }
-
-    // adminpanel/trash
-
-    public function trash()
-    {
-        return 'Trash Products';
-    }
-
-
-
 }
