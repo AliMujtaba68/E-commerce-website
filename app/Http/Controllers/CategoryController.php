@@ -4,36 +4,42 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Category; // Don't forget to import your Category model
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
-    // index
     public function index()
     {
-        return view('admin.pages.categories.index');
+        $categories = Category::all();
+        return view('admin.pages.categories.index', ['categories' => $categories]);
     }
 
-    // store
-
-    
     public function store(Request $request)
-    {   echo 'store function called';
-        // validate
-        $request->validate([
+    {
+        $validator = Validator::make($request->all(), [
             'name' => 'required|unique:categories|max:255',
         ]);
 
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 422);
+        }
 
-        echo 'validated';
-        // store 
-        $category = new Category();
-        $category->name = $request->name;
-        $category->save();
-        echo 'saved';
-        // return response
-        return back()->with('success');
+        $category = Category::create([
+            'name' => $request->name,
+        ]);
+
+        return response()->json($category, 201);
     }
 
+    public function destroy($id)
+    {
+        $category = Category::findOrFail($id);
 
+        try {
+            $category->delete();
+            return response()->json(['message' => 'Category deleted successfully.'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error deleting category.'], 500);
+        }
+    }
 }
