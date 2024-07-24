@@ -10,7 +10,7 @@
 
     <title>@yield('title')</title>
 
-    <link rel="stylesheet" href="{{asset('css/admin.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 

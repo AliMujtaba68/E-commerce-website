@@ -8,6 +8,18 @@
 
     <div class="container">
 
+        <!-- Flash Messages -->
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <div class="row mb-5">
 
             <div class="col-md-6 offset-md-3">
@@ -193,6 +205,8 @@
 
                     attachDeleteEvent();
 
+                    displayFlashMessage('Category added successfully.', 'success');
+
                 } else if (xhr.status === 422) {
 
                     var errorResponse = JSON.parse(xhr.responseText);
@@ -239,7 +253,7 @@
 
                         var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-                        fetch(`/adminpanel/categories/${categoryId}`, { // Corrected URL
+                        fetch(`/adminpanel/categories/${categoryId}`, {
 
                             method: 'DELETE',
 
@@ -259,9 +273,9 @@
 
                                 row.remove();
 
-                            } else {
+                                displayFlashMessage('Category deleted successfully.', 'success');
 
-                                // Enhanced error handling
+                            } else {
 
                                 response.json().then(data => {
 
@@ -296,6 +310,19 @@
             attachDeleteEvent();
 
         });
+
+        function displayFlashMessage(message, type) {
+            var alertDiv = document.createElement('div');
+            alertDiv.classList.add('alert', `alert-${type}`);
+            alertDiv.textContent = message;
+
+            var container = document.querySelector('.container');
+            container.insertBefore(alertDiv, container.firstChild);
+
+            setTimeout(function() {
+                alertDiv.remove();
+            }, 3000);
+        }
 
     </script>
 
