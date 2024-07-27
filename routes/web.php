@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PagesController;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProductController;
 use App\Models\Category;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ColorController;
+use App\Http\Controllers\PagesController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/', [PagesController::class, 'home'])->name('home');
 Route::get('cart', [PagesController::class, 'cart'])->name('cart');
@@ -49,6 +50,12 @@ Route::group(['prefix' => 'adminpanel', 'middleware' => 'admin'], function() {
         Route::get('/', [CategoryController::class, 'index'])->name('adminpanel.categories');
         Route::post('/', [CategoryController::class, 'store'])->name('adminpanel.category.store');
         Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('adminpanel.category.destroy');
+    });
+
+    Route::group(['prefix' => 'colors'], function () {
+        Route::get('/', [ColorController::class, 'index'])->name('adminpanel.colors');
+        Route::post('/', [ColorController::class, 'store'])->name('adminpanel.color.store');
+        Route::delete('/{id}', [ColorController::class, 'destroy'])->name('adminpanel.color.destroy');
     });
     
 
