@@ -10,7 +10,8 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
+        // Load categories with the count of products
+        $categories = Category::withCount('products')->get();
         return view('admin.pages.categories.index', ['categories' => $categories]);
     }
 
@@ -19,24 +20,24 @@ class CategoryController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:categories|max:255',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
         }
-    
+
         $category = Category::create([
             'name' => $request->name,
         ]);
-    
+
         session()->flash('success', 'Category added successfully.');
-    
+
         return response()->json($category, 201);
     }
-    
+
     public function destroy($id)
     {
         $category = Category::findOrFail($id);
-    
+
         try {
             $category->delete();
             session()->flash('success', 'Category deleted successfully.');

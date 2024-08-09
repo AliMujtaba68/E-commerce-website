@@ -98,7 +98,7 @@
 
                                         <td>{{$category->name}}</td>
 
-                                        <td>-</td>
+                                        <td>{{ $category->products_count }}</td>
 
                                         <td>{{ \Carbon\Carbon::parse($category->created_at)->format('Y-m-d H:i:s') }}</td>
 
@@ -182,7 +182,7 @@
 
                         <td>${responseData.name}</td>
 
-                        <td>-</td>
+                        <td>0</td> <!-- Default value, will need updating if the new category has products -->
 
                         <td>${formattedDate}</td>
 
