@@ -10,12 +10,12 @@
 
         <!-- Flash Messages -->
         @if(session('success'))
-            <div class="alert alert-success">
+            <div class="alert alert-success" id="flash-message">
                 {{ session('success') }}
             </div>
         @endif
         @if(session('error'))
-            <div class="alert alert-danger">
+            <div class="alert alert-danger" id="flash-message">
                 {{ session('error') }}
             </div>
         @endif
@@ -172,11 +172,11 @@
 
                     var createdAt = new Date(responseData.created_at);
 
-                    var formattedDate = createdAt.getFullYear() + '-' + 
-                                        ('0' + (createdAt.getMonth() + 1)).slice(-2) + '-' + 
-                                        ('0' + createdAt.getDate()).slice(-2) + ' ' + 
-                                        ('0' + createdAt.getHours()).slice(-2) + ':' + 
-                                        ('0' + createdAt.getMinutes()).slice(-2) + ':' + 
+                    var formattedDate = createdAt.getFullYear() + '-' +
+                                        ('0' + (createdAt.getMonth() + 1)).slice(-2) + '-' +
+                                        ('0' + createdAt.getDate()).slice(-2) + ' ' +
+                                        ('0' + createdAt.getHours()).slice(-2) + ':' +
+                                        ('0' + createdAt.getMinutes()).slice(-2) + ':' +
                                         ('0' + createdAt.getSeconds()).slice(-2);
 
                     newRow.innerHTML = `
@@ -281,7 +281,7 @@
 
                                     console.error('Error:', response.status, data.message || data.error);
 
-                                    alert('Failed to delete category: ' + (data.message || data.error)); 
+                                    alert('Failed to delete category: ' + (data.message || data.error));
 
                                 });
 
@@ -308,6 +308,14 @@
         document.addEventListener('DOMContentLoaded', function() {
 
             attachDeleteEvent();
+
+            // Auto-hide flash messages after 3 seconds
+            setTimeout(function() {
+                var flashMessage = document.getElementById('flash-message');
+                if (flashMessage) {
+                    flashMessage.style.display = 'none';
+                }
+            }, 3000);
 
         });
 

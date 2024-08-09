@@ -2,48 +2,95 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Color;
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
-    //adminpanel
-
+    // adminpanel
     public function index()
     {
-        return view('admin.pages.products.index');
+        $products = Product::with('category')->orderBy('created_at', 'desc')->get();
+        return view('admin.pages.products.index', ['products' => $products]);
     }
 
     // create
     public function create()
     {
-        return "Create Product";
+        $categories = Category::all();
+        $colors = Color::all();
+        return view('admin.pages.products.create', ['categories' => $categories, 'colors' => $colors]);
     }
 
     // store
-
     public function store(Request $request)
     {
-        return "save products";
+        try {
+            $request->validate([
+                'title' => 'required|max:255',
+                'description' => 'required',
+                'price' => 'required|numeric',
+                'category_id' => 'required|exists:categories,id',
+                'colors' => 'required|array',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ]);
+
+            $image_name = 'products/' . time() . rand(0, 9999) . '.' . $request->image->getClientOriginalExtension();
+            $request->image->storeAs('public', $image_name);
+
+            $product = Product::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'price' => $request->price * 100,
+                'category_id' => $request->category_id,
+                'image' => $image_name
+            ]);
+
+            $product->colors()->attach($request->colors);
+
+            return response()->json(['success' => true]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(['success' => false, 'message' => $e->validator->errors()->first()]);
+        } catch (\Exception $e) {
+            Log::error('Product creation error: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'An error occurred while creating the product.']);
+        }
     }
 
     // edit
-
-    public function edit()
+    public function edit($id)
     {
-        return "Edit Product";
+        $product = Product::findOrFail($id);
+        $categories = Category::all();
+        $colors = Color::all();
+        return view('admin.pages.products.edit', ['categories' => $categories, 'colors' => $colors, 'product' => $product]);
     }
 
-    // update
 
-    public function update(Request $request)
+
+    // update
+    public function update(Request $request, $id)
     {
+        // Update product logic
         return "Update Product";
     }
 
     // delete
-
     public function destroy($id)
     {
-        return "Delete Product";
+        try {
+            $product = Product::findOrFail($id);
+            $product->delete();
+            return response()->json(['success' => true], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to delete product'], 500);
+        }
     }
+
+
+
+
 }

@@ -42,8 +42,13 @@ Route::group(['prefix' => 'adminpanel', 'middleware' => 'admin'], function() {
     // Products
     Route::group(['prefix' => 'products'], function ()  {
         Route::get('/', [ProductController::class, 'index'])->name('adminpanel.products');
-        Route::get('/create', [ProductController::class, 'create'])->name('adminpanel.create');
-        Route::post('/create', [ProductController::class, 'store'])->name('adminpanel.store');
+        Route::get('/create', [ProductController::class, 'create'])->name('adminpanel.products.create');
+        Route::post('/create', [ProductController::class, 'store'])->name('adminpanel.products.store');
+        Route::get('/{id}', [ProductController::class, 'edit'])->name('adminpanel.products.edit');
+        Route::put('/{id}', [ProductController::class, 'update'])->name('adminpanel.products.update');
+        Route::delete('/{id}', [ProductController::class, 'destroy'])->name('adminpanel.products.destroy');
+
+
     });
 
     Route::group(['prefix' => 'categories'], function () {
@@ -57,6 +62,6 @@ Route::group(['prefix' => 'adminpanel', 'middleware' => 'admin'], function() {
         Route::post('/', [ColorController::class, 'store'])->name('adminpanel.color.store');
         Route::delete('/{id}', [ColorController::class, 'destroy'])->name('adminpanel.color.destroy');
     });
-    
 
-}); 
+
+});

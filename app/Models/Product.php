@@ -17,14 +17,14 @@ class product extends Model
 
     public function category()
     {
-        return $this->belongTo(Category::class);
+        return $this->belongsTo(Category::class);
     }
 
     // has many colors
 
     public function colors()
     {
-        return $this->belongsToMany(Color::class);
+        return $this->belongsToMany(Color::class, 'color_product');
 
     }
 
