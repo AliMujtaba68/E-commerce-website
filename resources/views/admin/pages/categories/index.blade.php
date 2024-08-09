@@ -103,9 +103,6 @@
                                         <td>{{ \Carbon\Carbon::parse($category->created_at)->format('Y-m-d H:i:s') }}</td>
 
                                         <td>
-
-                                            <a href="#" class="btn btn-primary btn-sm">Edit</a>
-
                                             <button type="button" class="btn btn-danger btn-sm deleteCategoryBtn">Delete</button>
 
                                         </td>

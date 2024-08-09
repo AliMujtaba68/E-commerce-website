@@ -31,24 +31,26 @@
     <div class="container">
         <div class="row mb-3">
             <div class="col-12 text-start">
-                <a href="{{ route('adminpanel.products.edit') }}" class="btn btn-primary mb-3">+ back to Product page</a>
+                <a href="{{ route('adminpanel.products') }}" class="btn btn-primary mb-3">+ back to Product page</a>
             </div>
         </div>
-        <h1 class="page-title">Create Product</h1>
+        <h1 class="page-title">Edit Product</h1>
         <div class="row justify-content-center mb-5">
             <div class="col-12">
                 <div class="card centered-card">
                     <div class="card-header">
-                        <h5>Create Product</h5>
+                        <h5>Edit Product</h5>
                     </div>
                     <div class="card-body">
-                        <form id="createProductForm" enctype="multipart/form-data">
+                        <form id="editProductForm" enctype="multipart/form-data">
                             @csrf
+                            @method('PUT')
+                            <input type="hidden" name="id" value="{{ $product->id }}">
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="title">Title</label>
-                                        <input type="text" id="title" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}">
+                                        <input type="text" id="title" name="title" class="form-control @error('title') is-invalid @enderror" value="{{$product->title}}">
                                         @error('title')
                                             <span class="invalid-feedback">
                                                 <strong>{{ $message }}</strong>
@@ -59,7 +61,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="price">Price</label>
-                                        <input type="number" id="price" name="price" class="form-control @error('price') is-invalid @enderror" value="{{ old('price') }}">
+                                        <input type="number" id="price" name="price" class="form-control @error('price') is-invalid @enderror" value="{{ old('price', $product->price / 100) }}">
                                         @error('price')
                                             <span class="invalid-feedback">
                                                 <strong>{{ $message }}</strong>
@@ -75,7 +77,7 @@
                                         <select name="category_id" id="category-id" class="form-control @error('category_id') is-invalid @enderror">
                                             <option value="">-- SELECT CATEGORY --</option>
                                             @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                                <option value="{{ $category->id }}" {{$product->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('category_id')
@@ -94,6 +96,7 @@
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
+                                        <img src="{{asset('storage/' .$product->image)}}" width="80px" height="80px">
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +106,7 @@
                                         <label for="colors">Colors</label> &nbsp; &nbsp;
                                         @foreach ($colors as $color)
                                             <div class="form-check form-check-inline">
-                                                <input type="checkbox" name="colors[]" class="form-check-input" value="{{ $color->id }}">
+                                                <input type="checkbox" name="colors[]" class="form-check-input" value="{{ $color->id }}" {{ in_array($color->id, old('colors', $product->colors->pluck('id')->toArray())) ? 'checked' : '' }}>
                                                 <label for="{{ $color->name }}" class="form-check-label">{{ $color->name }}</label>
                                             </div>
                                         @endforeach
@@ -119,7 +122,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="description">Description</label>
-                                        <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror" rows="5" placeholder="Describe your product">{{ old('description') }}</textarea>
+                                        <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror" rows="5" placeholder="Describe your product">{{ old('description', $product->description) }}</textarea>
                                         @error('description')
                                             <span class="invalid-feedback">
                                                 <strong>{{ $message }}</strong>
@@ -129,7 +132,7 @@
                                 </div>
                             </div>
                             <div class="form-group text-end">
-                                <button type="button" class="btn btn-primary" id="submitBtn">Create</button>
+                                <button type="button" class="btn btn-primary" id="submitBtn">Update</button>
                             </div>
                         </form>
                     </div>
@@ -143,7 +146,7 @@
             console.log('DOM fully loaded and parsed');
 
             const submitButton = document.getElementById('submitBtn');
-            const form = document.getElementById('createProductForm');
+            const form = document.getElementById('editProductForm');
 
             if (submitButton && form) {
                 console.log('Submit button and form element found');
@@ -158,7 +161,7 @@
 
             function submitForm() {
                 const formData = new FormData(form);
-                fetch(`{{ route('adminpanel.products.store') }}`, {
+                fetch(`{{ route('adminpanel.products.update', $product->id) }}`, {
                     method: 'POST',
                     body: formData,
                     headers: {

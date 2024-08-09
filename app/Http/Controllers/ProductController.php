@@ -74,8 +74,41 @@ class ProductController extends Controller
     // update
     public function update(Request $request, $id)
     {
-        // Update product logic
-        return "Update Product";
+        try {
+            $request->validate([
+                'title' => 'required|max:255',
+                'description' => 'required',
+                'price' => 'required|numeric',
+                'category_id' => 'required|exists:categories,id',
+                'colors' => 'required|array',
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ]);
+
+            $product = Product::findOrFail($id);
+            $image_name = $product->image;
+            if($request -> image)
+            {
+                $image_name = 'products/' . time() . rand(0, 9999) . '.' . $request->image->getClientOriginalExtension();
+            $request->image->storeAs('public', $image_name);
+
+            }
+            $product->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                'price' => $request->price * 100,
+                'category_id' => $request->category_id,
+                'image' => $image_name
+            ]);
+
+            $product->colors()->sync($request->colors);
+
+            return response()->json(['success' => true]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(['success' => false, 'message' => $e->validator->errors()->first()]);
+        } catch (\Exception $e) {
+            Log::error('Product creation error: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'An error occurred while creating the product.']);
+        }
     }
 
     // delete
