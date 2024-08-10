@@ -1,16 +1,22 @@
 @extends('layouts.master')
 @section('title', 'Home Page')
 @section('content')
-   <main class="homepage">
+    <main class="homepage">
 
-   @include('pages.components.home.header')
-   @auth
-   <form action="{{route('logout')}}" method="POST">
-    @csrf
-    <button type="submit" class="btn btn-primary">Logout</button>
-</form>
-   @endauth
+        @include('pages.components.home.header')
 
-   </main>
+        <section class="products-section">
+            <div class="container">
 
+                <h1 class="section-title">Featured Products</h1>
+                <div class="products-row">
+                    @foreach ($products as $product)
+                        <x-product-box :product="$product" />
+                    @endforeach
+                </div>
+
+            </div>
+        </section>
+    </main>
 @endsection
+

@@ -12,13 +12,14 @@
 
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 </head>
 
 <body>
 
-    @include('admin.partials.nav') 
+    @include('admin.partials.nav')
 
     <main class="admin-main">
 
