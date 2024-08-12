@@ -3,15 +3,24 @@
 
     .product-page-row
         display: flex
+        flex-wrap: nowrap  // Prevent wrapping on larger screens
+        gap: 20px  // Space between image and details
 
         .product-page-image
-            width: 50%
+            flex: 1  // Take up space proportionally
+            max-width: 50%  // Half width on larger screens
             display: flex
             justify-content: center
             align-items: center
+            padding: 10px
+            box-sizing: border-box
+            border: 2px solid #ddd
+            border-radius: 8px
+            background: #fff
 
         .product-page-details
-            width: 50%
+            flex: 1  // Take up space proportionally
+            max-width: 50%  // Half width on larger screens
 
             .p-title
                 color: $primary
@@ -48,7 +57,7 @@
                 margin-bottom: 20px
 
             .p-form
-                margine-bottom: 20px
+                margin-bottom: 20px
                 label
                     display: block
                     color: black
@@ -92,13 +101,25 @@
                 border: none
                 outline: none
                 cursor: pointer
-                transition: 0.3s
+                transition: all 0.4s ease
                 display: inline-block
                 margin-top: 20px
-                transition: all 0.4s ease
                 width: 100%
 
                 &:hover
                     background-color: darken($primary, 10%)
                     transform: translateY(-5px)
-                    box-shadow: 0 12px 30px  rgba(0, 0, 0, 0.5)
+                    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5)
+
+    // Responsive styles
+    @media (max-width: 768px)
+        .product-page-row
+            flex-direction: column  // Stack vertically on small screens
+            gap: 0  // Remove space between image and details
+
+        .product-page-image, .product-page-details
+            max-width: 100%  // Full width on small screens
+            width: 100%
+            margin: 0  // Remove margin on small screens
+
+

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\cartController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\PagesController;
@@ -17,11 +18,15 @@ Route::get('/wish-list', [PagesController::class, 'wishlist'])->name('wishlist')
 Route::get('/account', [PagesController::class, 'account'])->name('account')->middleware('auth');
 Route::get('/products{id}', [PagesController::class, 'product'])->name('product');
 
+// Cart
+Route::post('/add-to-cart{id}', [cartController::class, 'addToCart'])->name('addToCart');
+Route::delete('/remove-from-cart{id}', [cartController::class, 'removeFromCart'])->name('removeFromCart');
+
+
 // Auth Routes
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('show.login')->middleware('guest');
 Route::get('/register', [AuthController::class, 'showRegister'])->name('show.register')->middleware('guest');
-
 Route::post('/register', [AuthController::class, 'postRegister'])->name('register')->middleware('guest');
 Route::post('/login', [AuthController::class, 'postLogin'])->name('login')->middleware('guest');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');

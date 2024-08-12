@@ -1,0 +1,71 @@
+.pop-up
+    background: rgba(0, 0, 0, 0.5)
+    position: fixed
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    display: flex
+    justify-content: center
+    align-content: center
+    align-items: center
+    z-index: 11
+
+    .pop-up-box
+        background: rgba(255, 255, 255, 0.2)
+        padding: 100px
+        text-align: center
+        border-radius: 100px
+        backdrop-filter: blur(10px)
+        -webkit-backdrop-filter: blur(10px)
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2)
+        border: 1px solid rgba(255, 255, 255, 0.3)
+        opacity: 0 // Initially hidden
+        transform: scale(0.5) // Initially scaled down
+        animation: zoom-in-out 0.6s forwards // Apply quicker zoom animation
+
+        .pop-up-title
+            color: rgba(255, 255, 255, 0.9)
+            font-size: 24px
+            font-weight: 700
+            margin-bottom: 50px
+            letter-spacing: 0.5px
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5)
+
+        .pop-up-actions
+            display: flex
+            justify-content: center
+            gap: 20px
+
+            .btn
+                padding: 15px 30px // Increase padding for larger buttons
+                font-size: 18px // Increase font size
+                border-radius: 30px // Adjusted radius
+                transition: background 0.3s ease, transform 0.3s ease
+
+                &.btn-outline
+                    background: rgba(255, 255, 255, 0.2) // Transparent background
+                    border: 2px solid $primary // Border color
+                    color: $primary // Text color
+                    &:hover
+                        background: $primary // Background color on hover
+                        color: #fff // Text color on hover
+
+                &.btn-primary
+                    background-color: #17202A // Original color
+                    color: white
+                    border: 1px solid rgba(255, 255, 255, 0.5)
+                    &:hover
+                        background-color: #2C3E50 // Slightly lighter shade
+                        transform: scale(1.05) // Scale up effect
+
+@keyframes zoom-in-out
+    0%
+        opacity: 0
+        transform: scale(0.5) // Start scaled down
+    40%
+        opacity: 1
+        transform: scale(1.2) // Zoom in
+    100%
+        opacity: 1
+        transform: scale(1) // End at original size
