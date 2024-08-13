@@ -35,6 +35,13 @@ class PagesController extends Controller
         return view('pages.account');
     }
 
+    // checkout
+
+    public function checkout()
+    {
+        return view('pages.checkout');
+    }
+
     // product
     public function product($id)
     {

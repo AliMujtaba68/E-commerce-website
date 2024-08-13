@@ -16,6 +16,7 @@ Route::get('/', [PagesController::class, 'home'])->name('home');
 Route::get('/cart', [PagesController::class, 'cart'])->name('cart');
 Route::get('/wish-list', [PagesController::class, 'wishlist'])->name('wishlist');
 Route::get('/account', [PagesController::class, 'account'])->name('account')->middleware('auth');
+Route::get('/checkout', [PagesController::class, 'checkout'])->name('checkout')->middleware('auth');
 Route::get('/products{id}', [PagesController::class, 'product'])->name('product');
 
 // Cart

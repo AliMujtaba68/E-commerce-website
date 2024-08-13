@@ -80,7 +80,7 @@
 
             <div class="cart-actions">
                 <a href="{{ route('home') }}" class="btn btn-primary">Continue Shopping</a>
-                <a href="#" class="btn btn-primary">Checkout</a>
+                <a href="{{route('checkout')}}" class="btn btn-primary">Checkout</a>
             </div>
         </div>
     </main>

@@ -209,9 +209,8 @@ ul li a:hover {
 .login-page .login-form-box .login-title {
   font-size: 24px;
   font-weight: 600;
-  margin-bottom: 20px;
-  text-align: center;
   margin-bottom: 30px;
+  text-align: center;
   color: #17202A;
 }
 @media (max-width: 600px) {
@@ -219,10 +218,11 @@ ul li a:hover {
     font-size: 20px;
   }
 }
-.login-page .login-form-box .field {
+
+.field {
   margin-bottom: 20px;
 }
-.login-page .login-form-box .field input {
+.field input, .field select {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -230,10 +230,10 @@ ul li a:hover {
   outline: none;
   transition: 0.3s;
 }
-.login-page .login-form-box .field input:focus {
+.field input:focus, .field select:focus {
   border-color: #17202A;
 }
-.login-page .login-form-box .field .has-error {
+.field .has-error {
   border-color: red;
 }
 
@@ -452,6 +452,21 @@ ul li a:hover {
 .cart-page .cart-actions .btn-primary:hover {
   background: #050709;
   scale: 1.02;
+}
+
+.checkout-page {
+  padding: 50px 0;
+  background: #f9f9f9;
+}
+.checkout-page .checkout-form {
+  background: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3);
+  width: 500px;
+  overflow: hidden;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .product-box {
