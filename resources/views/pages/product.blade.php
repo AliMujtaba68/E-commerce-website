@@ -25,7 +25,15 @@
                 <section class="product-page-details">
                     <p class="p-title">{{ $product->title }}</p>
                     <p class="p-price">${{ $product->price / 100 }}</p>
-                    <p class="p-category">-{{ $product->category->name }}</p>
+
+                    <!-- Updated category and subcategory display -->
+                    <p class="p-category">
+                        @if ($product->subcategory)
+                            {{ $product->subcategory->name }} |
+                        @endif
+                        {{ $product->category->name }}
+                    </p>
+
                     <p class="p-description">{{ $product->description }}</p>
                     <form action="{{ route('addToCart', $product->id) }}" method="post">
                         @csrf

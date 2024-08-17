@@ -7,9 +7,8 @@
     <title>Edit Product</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        /* Add this CSS */
         body {
-            padding-top: 70px; /* Adjust this value to match the height of your navbar */
+            padding-top: 70px;
         }
 
         .page-title {
@@ -50,7 +49,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="title">Title</label>
-                                        <input type="text" id="title" name="title" class="form-control @error('title') is-invalid @enderror" value="{{$product->title}}">
+                                        <input type="text" id="title" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ $product->title }}">
                                         @error('title')
                                             <span class="invalid-feedback">
                                                 <strong>{{ $message }}</strong>
@@ -77,7 +76,7 @@
                                         <select name="category_id" id="category-id" class="form-control @error('category_id') is-invalid @enderror">
                                             <option value="">-- SELECT CATEGORY --</option>
                                             @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}" {{$product->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                                <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('category_id')
@@ -89,6 +88,24 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="subcategory">Subcategory</label>
+                                        <select name="subcategory_id" id="subcategory-id" class="form-control @error('subcategory_id') is-invalid @enderror">
+                                            <option value="">-- SELECT SUBCATEGORY --</option>
+                                            @foreach ($subcategories as $subcategory)
+                                                <option value="{{ $subcategory->id }}" data-category-id="{{ $subcategory->category_id }}" {{ $product->subcategory_id == $subcategory->id ? 'selected' : '' }}>{{ $subcategory->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('subcategory_id')
+                                            <span class="invalid-feedback">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="image">Image</label>
                                         <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror">
                                         @error('image')
@@ -96,18 +113,16 @@
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
-                                        <img src="{{asset('storage/' .$product->image)}}" width="80px" height="80px">
+                                        <img src="{{ asset('storage/' . $product->image) }}" width="80px" height="80px">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="colors">Colors</label> &nbsp; &nbsp;
+                                        <label for="colors">Colors</label>
                                         @foreach ($colors as $color)
-                                            <div class="form-check form-check-inline">
-                                                <input type="checkbox" name="colors[]" class="form-check-input" value="{{ $color->id }}" {{ in_array($color->id, old('colors', $product->colors->pluck('id')->toArray())) ? 'checked' : '' }}>
-                                                <label for="{{ $color->name }}" class="form-check-label">{{ $color->name }}</label>
+                                            <div class="form-check">
+                                                <input type="checkbox" name="colors[]" value="{{ $color->id }}" class="form-check-input" id="color{{ $color->id }}" {{ in_array($color->id, old('colors', $product->colors->pluck('id')->toArray())) ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="color{{ $color->id }}">{{ $color->name }}</label>
                                             </div>
                                         @endforeach
                                         @error('colors')
@@ -141,46 +156,47 @@
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM fully loaded and parsed');
-
-            const submitButton = document.getElementById('submitBtn');
-            const form = document.getElementById('editProductForm');
-
-            if (submitButton && form) {
-                console.log('Submit button and form element found');
-
-                submitButton.addEventListener('click', function() {
-                    console.log('Submit button clicked');
-                    submitForm();
-                });
-            } else {
-                console.error('Submit button or form element not found');
-            }
-
-            function submitForm() {
-                const formData = new FormData(form);
-                fetch(`{{ route('adminpanel.products.update', $product->id) }}`, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        window.location.href = `{{ route('adminpanel.products') }}`;
+        $(document).ready(function() {
+            $('#category-id').on('change', function() {
+                var categoryId = $(this).val();
+                $('#subcategory-id option').each(function() {
+                    var subcategoryCategoryId = $(this).data('category-id');
+                    if (subcategoryCategoryId == categoryId) {
+                        $(this).show();
                     } else {
-                        console.error('Error:', data.message);
+                        $(this).hide();
                     }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
                 });
-            }
+                $('#subcategory-id').val(''); // Reset subcategory selection
+            });
+
+            // Trigger the change event to ensure correct display of subcategories on page load
+            $('#category-id').trigger('change');
+
+            $('#submitBtn').on('click', function() {
+                var formData = new FormData($('#editProductForm')[0]);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('adminpanel.products.update', $product->id) }}',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            window.location.href = '{{ route('adminpanel.products') }}';
+                        } else {
+                            console.error('Error:', response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
         });
     </script>
 </body>

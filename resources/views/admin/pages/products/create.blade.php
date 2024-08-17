@@ -7,21 +7,17 @@
     <title>Create Product</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        /* Add this CSS */
         body {
-            padding-top: 70px; /* Adjust this value to match the height of your navbar */
+            padding-top: 70px;
         }
-
         .page-title {
             text-align: center;
             margin-bottom: 2rem;
         }
-
         .centered-card {
             max-width: 800px;
             margin: 0 auto;
         }
-
         .btn-back {
             margin-bottom: 1rem;
         }
@@ -48,7 +44,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="title">Title</label>
-                                        <input type="text" id="title" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}">
+                                        <input type="text" id="title" name="title" class="form-control @error('title') is-invalid @enderror">
                                         @error('title')
                                             <span class="invalid-feedback">
                                                 <strong>{{ $message }}</strong>
@@ -59,7 +55,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="price">Price</label>
-                                        <input type="number" id="price" name="price" class="form-control @error('price') is-invalid @enderror" value="{{ old('price') }}">
+                                        <input type="number" id="price" name="price" class="form-control @error('price') is-invalid @enderror">
                                         @error('price')
                                             <span class="invalid-feedback">
                                                 <strong>{{ $message }}</strong>
@@ -75,7 +71,7 @@
                                         <select name="category_id" id="category-id" class="form-control @error('category_id') is-invalid @enderror">
                                             <option value="">-- SELECT CATEGORY --</option>
                                             @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('category_id')
@@ -87,9 +83,14 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="image">Image</label>
-                                        <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror">
-                                        @error('image')
+                                        <label for="subcategory">Subcategory</label>
+                                        <select name="subcategory_id" id="subcategory-id" class="form-control @error('subcategory_id') is-invalid @enderror">
+                                            <option value="">-- SELECT SUBCATEGORY --</option>
+                                            @foreach ($subcategories as $subcategory)
+                                                <option value="{{ $subcategory->id }}" data-category-id="{{ $subcategory->category_id }}">{{ $subcategory->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('subcategory_id')
                                             <span class="invalid-feedback">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -100,11 +101,22 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="colors">Colors</label> &nbsp; &nbsp;
+                                        <label for="image">Image</label>
+                                        <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror">
+                                        @error('image')
+                                            <span class="invalid-feedback">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="colors">Colors</label>
                                         @foreach ($colors as $color)
-                                            <div class="form-check form-check-inline">
-                                                <input type="checkbox" name="colors[]" class="form-check-input" value="{{ $color->id }}">
-                                                <label for="{{ $color->name }}" class="form-check-label">{{ $color->name }}</label>
+                                            <div class="form-check">
+                                                <input type="checkbox" name="colors[]" value="{{ $color->id }}" class="form-check-input" id="color{{ $color->id }}">
+                                                <label class="form-check-label" for="color{{ $color->id }}">{{ $color->name }}</label>
                                             </div>
                                         @endforeach
                                         @error('colors')
@@ -115,69 +127,76 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="description">Description</label>
-                                        <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror" rows="5" placeholder="Describe your product">{{ old('description') }}</textarea>
-                                        @error('description')
-                                            <span class="invalid-feedback">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
+                            <div class="form-group mb-3">
+                                <label for="description">Description</label>
+                                <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror"></textarea>
+                                @error('description')
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
-                            <div class="form-group text-end">
-                                <button type="button" class="btn btn-primary" id="submitBtn">Create</button>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-success">Create</button>
                             </div>
                         </form>
                     </div>
                 </div>
+                <div id="flash-message" class="alert d-none mt-3"></div>
             </div>
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM fully loaded and parsed');
-
-            const submitButton = document.getElementById('submitBtn');
-            const form = document.getElementById('createProductForm');
-
-            if (submitButton && form) {
-                console.log('Submit button and form element found');
-
-                submitButton.addEventListener('click', function() {
-                    console.log('Submit button clicked');
-                    submitForm();
-                });
-            } else {
-                console.error('Submit button or form element not found');
-            }
-
-            function submitForm() {
-                const formData = new FormData(form);
-                fetch(`{{ route('adminpanel.products.store') }}`, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        window.location.href = `{{ route('adminpanel.products') }}`;
+        $(document).ready(function() {
+            $('#category-id').on('change', function() {
+                var categoryId = $(this).val();
+                $('#subcategory-id option').each(function() {
+                    var subcategoryCategoryId = $(this).data('category-id');
+                    if (subcategoryCategoryId == categoryId) {
+                        $(this).show();
                     } else {
-                        console.error('Error:', data.message);
+                        $(this).hide();
                     }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
                 });
-            }
+                $('#subcategory-id').val(''); // Reset subcategory selection
+            });
+
+            $('#createProductForm').on('submit', function(e) {
+                e.preventDefault();
+
+                var formData = new FormData(this);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('adminpanel.products.store') }}',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            $('#flash-message').removeClass('d-none alert-danger').addClass('alert-success').text('Product created successfully.').fadeIn();
+                            setTimeout(function() {
+                                $('#flash-message').fadeOut().addClass('d-none');
+                            }, 3000);
+                            $('#createProductForm')[0].reset();
+                        } else {
+                            $('#flash-message').removeClass('d-none alert-success').addClass('alert-danger').text(response.message).fadeIn();
+                            setTimeout(function() {
+                                $('#flash-message').fadeOut().addClass('d-none');
+                            }, 3000);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        $('#flash-message').removeClass('d-none alert-success').addClass('alert-danger').text('An error occurred: ' + error).fadeIn();
+                        setTimeout(function() {
+                            $('#flash-message').fadeOut().addClass('d-none');
+                        }, 3000);
+                    }
+                });
+            });
         });
     </script>
 </body>

@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Category;
+use App\Models\Product;
 
 class CategoryController extends Controller
 {
     public function index()
     {
-        // Load categories with the count of products
-        $categories = Category::withCount('products')->get();
+        // Load categories with the count of products and subcategories
+        $categories = Category::withCount(['products', 'subcategories'])->get();
         return view('admin.pages.categories.index', ['categories' => $categories]);
     }
 
@@ -39,8 +40,15 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
 
         try {
+            // Move products to the "Uncategorized" category before deletion
+            $uncategorizedCategory = Category::firstOrCreate(['name' => 'Uncategorized']);
+
+            Product::where('category_id', $category->id)
+                ->update(['category_id' => $uncategorizedCategory->id]);
+
             $category->delete();
-            session()->flash('success', 'Category deleted successfully.');
+
+            session()->flash('success', 'Category deleted successfully, and products moved to Uncategorized.');
             return response()->json(['message' => 'Category deleted successfully.'], 200);
         } catch (\Exception $e) {
             session()->flash('error', 'Error deleting category.');

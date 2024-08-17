@@ -5,8 +5,17 @@
 @section('content')
     <h1 class="page-title">PRODUCTS</h1>
     <div class="container">
+
         <div class="text-end mb-3">
-            <a href="{{ route('adminpanel.products.create') }}" class="btn btn-primary mb-3">+ Create Product</a>
+            <div>
+                <a href="{{ route('adminpanel.products.create') }}" class="btn btn-primary mb-3">+ Create Product</a>
+            </div>
+            <div>
+                <a href="{{ route('adminpanel.categories') }}" class="btn btn-primary mb-3">+ back to Category page</a>
+            </div>
+            <div>
+                <a href="{{ route('adminpanel.subcategory.index') }}" class="btn btn-primary mb-3">+ back to Sub-Category page</a>
+            </div>
         </div>
         <div class="row">
             <div class="col-12">
@@ -22,6 +31,7 @@
                                     <th>Title</th>
                                     <th>Price</th>
                                     <th>Category</th>
+                                    <th>Subcategory</th> <!-- Added column -->
                                     <th>Colors</th>
                                     <th>Image</th>
                                     <th>Published</th>
@@ -35,6 +45,7 @@
                                         <td>{{ $product->title }}</td>
                                         <td>{{ $product->price }}</td>
                                         <td>{{ $product->category->name }}</td>
+                                        <td>{{ $product->subcategory ? $product->subcategory->name : 'N/A' }}</td> <!-- Updated line -->
                                         <td>
                                             @foreach ($product->colors as $color)
                                                 <span class="badge color-badge" data-color="{{$color->code}}" style="background: {{$color->code}}">{{$color->name}}</span>

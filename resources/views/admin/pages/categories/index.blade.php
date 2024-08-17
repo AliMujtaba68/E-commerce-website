@@ -5,6 +5,9 @@
 @section('content')
 
     <h1 class="page-title">Categories</h1>
+    <div class="col-12 text-start">
+        <a href="{{ route('adminpanel.subcategory.index') }}" class="btn btn-primary mb-3">+ back to Sub-Category page</a>
+    </div>
 
     <div class="container">
 
@@ -80,6 +83,8 @@
 
                                     <th>Total Products</th>
 
+                                    <th>Subcategories Count</th> <!-- New column -->
+
                                     <th>Published</th>
 
                                     <th>Actions</th>
@@ -99,6 +104,8 @@
                                         <td>{{$category->name}}</td>
 
                                         <td>{{ $category->products_count }}</td>
+
+                                        <td>{{ $category->subcategories_count }}</td> <!-- Display subcategories count -->
 
                                         <td>{{ \Carbon\Carbon::parse($category->created_at)->format('Y-m-d H:i:s') }}</td>
 
