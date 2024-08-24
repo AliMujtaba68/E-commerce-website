@@ -1,0 +1,146 @@
+// General styling for category and subcategory pages
+.content-area
+  padding: 20px
+  background-color: #f1f1f1
+
+  h1.category-title, h1.subcategory-title
+    font-size: 26px
+    color: #444
+    margin-bottom: 25px
+
+// Subcategory grid and cards
+.subcategory-grid
+  display: flex
+  flex-wrap: wrap
+  gap: 20px
+
+.subcategory-card
+  flex: 1 1 calc(25% - 20px) // Four items per row
+  background-color: #ffffff
+  border: 1px solid #ccc
+  border-radius: 6px
+  text-align: center
+  padding: 15px
+  transition: box-shadow 0.3s, transform 0.3s
+
+  &:hover
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15)
+    transform: translateY(-5px)
+
+  .subcategory-image
+    max-width: 100px
+    max-height: 100px
+    object-fit: cover
+    margin-bottom: 12px
+
+  .subcategory-name
+    font-size: 18px
+    color: #333
+    text-decoration: none
+
+    &:hover
+      color: #ff6600
+
+// Product list and items
+.product-list, .product-gallery
+  ul
+    list-style-type: none
+    padding: 0
+    margin: 0
+
+    li.product-item, li.product-entry
+      background-color: #ffffff
+      border: 1px solid #ddd
+      border-radius: 4px
+      padding: 15px
+      margin-bottom: 10px
+      transition: background-color 0.3s, box-shadow 0.3s
+
+      &:hover
+        background-color: #fafafa
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)
+
+// Pagination styling
+.pagination-links
+  display: flex
+  justify-content: center
+  margin-top: 25px
+
+  .page-item
+    margin: 0 5px
+
+    .page-link
+      padding: 10px 15px
+      border: 1px solid #ccc
+      border-radius: 4px
+      color: #007bff
+      text-decoration: none
+
+      &:hover
+        background-color: #e0e0e0
+
+    &.active
+      .page-link
+        background-color: #007bff
+        color: #ffffff
+        border-color: #007bff
+
+// Product Box Styling
+.product-box
+  border-radius: 3px
+  background: #fff
+  overflow: hidden
+  box-shadow: 0 8px 40px 0 rgba(49, 32, 138, 0.05)
+  text-align: center
+  max-width: 270px
+  text-decoration: none
+  transition: all 0.4s ease
+
+  &:hover
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5)
+    transform: translateY(-5px)
+
+  .image
+    background: #f6f7fb
+    height: 230px
+    width: 270px
+    max-width: 100%
+    display: flex
+    align-items: center
+    justify-content: center
+    margin-bottom: 20px
+
+  .product-title
+    font-size: 20px
+    font-weight: 700
+    color: #0c5a61
+    margin-bottom: 10px
+
+  .color-plateletes
+    display: flex
+    justify-content: center
+    gap: 10px
+    margin-bottom: 20px
+    align-items: center
+
+    .color-platelete
+      width: 30px
+      height: 15px
+      border-radius: 30px
+      background: #000
+
+      &.white-color
+        background: #ffffff
+        border: 2px solid #474747 // Outline for white color
+
+  .product-category
+    color: #0c5a61
+    font-style: italic
+    font-weight: 500
+    margin-bottom: 20px
+
+  .product-price
+    font-size: 20px
+    font-weight: 700
+    color: #0c5a61
+    margin-bottom: 20px

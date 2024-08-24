@@ -2,7 +2,6 @@
 
 use App\Models\Category;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
@@ -17,25 +16,25 @@ use App\Http\Controllers\SubcategoryController;
 Route::get('/', [PagesController::class, 'home'])->name('home');
 Route::get('/cart', [PagesController::class, 'cart'])->name('cart');
 Route::get('/wish-list', [PagesController::class, 'wishlist'])->name('wishlist');
-Route::get('/account', [PagesController::class, 'account'])
-    ->name('account')
-    ->middleware('auth');
-Route::get('/checkout', [PagesController::class, 'checkout'])
-    ->name('checkout')
-    ->middleware('auth');
-Route::get('/products/{id}', [PagesController::class, 'product'])->name('product'); // Fixed the missing slash
+Route::get('/account', [PagesController::class, 'account'])->name('account')->middleware('auth');
+Route::get('/checkout', [PagesController::class, 'checkout'])->name('checkout')->middleware('auth');
+
+// Product routes for public side (now handled by PagesController)
+Route::get('/product/{id}', [PagesController::class, 'product'])->name('product.show');
+
+// Route for category without subcategory filtering
+Route::get('/category/{id}', [CategoryController::class, 'show'])->name('category');
+
+// Route for category with subcategory filtering
+Route::get('/category/{id}/subcategory/{subcategory_id}', [CategoryController::class, 'show'])->name('subcategory');
 
 // Cart Routes
-Route::post('/add-to-cart/{id}', [CartController::class, 'addToCart'])->name('addToCart'); // Added missing slash
-Route::delete('/remove-from-cart/{id}', [CartController::class, 'removeFromCart'])->name('removeFromCart'); // Added missing slash
+Route::post('/add-to-cart/{id}', [CartController::class, 'addToCart'])->name('addToCart');
+Route::delete('/remove-from-cart/{id}', [CartController::class, 'removeFromCart'])->name('removeFromCart');
 
 // Auth Routes
-Route::get('/login', [AuthController::class, 'showLogin'])
-    ->name('show.login')
-    ->middleware('guest');
-Route::get('/register', [AuthController::class, 'showRegister'])
-    ->name('show.register')
-    ->middleware('guest');
+Route::get('/login', [AuthController::class, 'showLogin'])->name('show.login')->middleware('guest');
+Route::get('/register', [AuthController::class, 'showRegister'])->name('show.register')->middleware('guest');
 Route::post('/register', [AuthController::class, 'postRegister'])->name('register')->middleware('guest');
 Route::post('/login', [AuthController::class, 'postLogin'])->name('login')->middleware('guest');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
@@ -52,7 +51,6 @@ Route::get('/db-check', function () {
 
 // AdminPanel Routes
 Route::group(['prefix' => 'adminpanel', 'middleware' => 'admin'], function () {
-
     Route::get('/', [AdminController::class, 'dashboard'])->name('adminpanel');
 
     // Products Routes
@@ -76,7 +74,7 @@ Route::group(['prefix' => 'adminpanel', 'middleware' => 'admin'], function () {
     Route::group(['prefix' => 'subcategories'], function () {
         Route::get('/', [SubcategoryController::class, 'index'])->name('adminpanel.subcategory.index');
         Route::post('/', [SubcategoryController::class, 'store'])->name('adminpanel.subcategory.store');
-        Route::delete('/{id}', [SubcategoryController::class, 'destroy'])->name('adminpanel.subcategory.destroy'); // Fixed the delete route
+        Route::delete('/{id}', [SubcategoryController::class, 'destroy'])->name('adminpanel.subcategory.destroy');
         Route::put('/{id}', [SubcategoryController::class, 'update'])->name('adminpanel.subcategory.update');
     });
 

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Category;
-use App\Models\Product;
 
 class CategoryController extends Controller
 {
@@ -55,4 +56,21 @@ class CategoryController extends Controller
             return response()->json(['message' => 'Error deleting category.'], 500);
         }
     }
+
+    // Show category with products
+    public function show($id, $subcategory_id = null)
+{
+    $category = Category::with('subcategories')->findOrFail($id);
+
+    if ($subcategory_id) {
+        $subcategory = Subcategory::findOrFail($subcategory_id);
+        $products = $subcategory->products()->paginate(16);
+    } else {
+        $products = $category->products()->paginate(16);
+    }
+
+    return view('category', compact('category', 'products'));
+}
+
+
 }

@@ -1,56 +1,104 @@
 .menu
-    background: $primary
-    height: 60px
+  background: #fff
+  height: 80px
+  display: flex
+  justify-content: space-between
+  align-items: center
+  padding: 0 30px
+  color: #000
+  position: relative
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2)
+
+  .logo
+    height: 50px
+    margin-top: 10px
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2)
+    background: black
+    padding: 10px
+
+  .contact-search
     display: flex
-    justify-content: space-between
     align-items: center
-    padding: 0 25px
+    margin-left: 30px
+    position: absolute
+    left: 50%
+    transform: translateX(-45%)
 
-.logo
-    height: 46px
-    margin-top: 7px
+    .phone-number
+      margin-right: 20px
+      font-size: 16px
 
-ul
+    .search-bar
+      padding: 10px 25px
+      border: 2px solid #2980B9
+      border-radius: 50px
+      font-size: 14px
+      width: 320px
+      max-width: 100%
+      outline: none
+      transition: border-color 0.3s ease
+
+      &:focus
+        border-color: #3498DB
+
+  ul
     list-style-type: none
     display: flex
     align-items: center
     margin: 0
-    gap: 30px
+    gap: 20px
 
-    @media (max-width: 600px)
-        flex-direction: column
-        gap: 10px
+    li
+      .nav-icon
+        height: 50px
+        width: 50px
+        display: flex
+        justify-content: center
+        align-items: center
+        font-size: 28px
+        text-decoration: none
+        transition: all 0.3s ease
+        position: relative
 
-    li 
-        a
-            color: #fff
-            height: 46px
-            width: 46px
-            font-size: 26px
-            background: #273746
-            border-radius: 50%
-            display: flex
-            justify-content: center
-            align-items: center
-            text-decoration: none
-            transition: all 0.4s ease
-            position: relative
+        .info-count
+          width: 20px
+          height: 20px
+          background: red
+          border-radius: 50%
+          color: #fff
+          font-size: 12px
+          display: flex
+          justify-content: center
+          align-items: center
+          position: absolute
+          top: -2px // Positioned above the cart icon
+          right: 20px // Positioned to the right of the cart icon
 
-            .info-count
-                width: 20px
-                height: 20px
-                background: red
-                border-radius: 50%
-                color: #fff
-                font-size: 12px
-                display: flex
-                justify-content: center
-                align-items: center
-                position: absolute
-                top: 0px
-                right: 0px
-                transform: translate(20%, -20%)
+        .cart-info
+          display: flex
+          flex-direction: column
+          align-items: center
+          margin-left: 10px
 
-            &:hover
-                background: #fff
-                color: $primary
+          span
+            font-size: 14px
+
+          .cart-amount
+            color: #ff69b4
+
+        &:hover
+          color: #2c3e50
+
+  .home-icon::before
+    content: "\1F3E0" // Unicode for house emoji or use an appropriate icon
+
+  .account-icon::before
+    content: "\1F464" // Unicode for person emoji or use an appropriate icon
+
+  .cart-icon::before
+    content: "\1F6D2" // Unicode for shopping cart emoji or use an appropriate icon
+
+@media (max-width: 600px)
+  .menu
+    flex-direction: column
+    gap: 15px

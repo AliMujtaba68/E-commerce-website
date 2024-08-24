@@ -1,34 +1,47 @@
-.home-header
-    background: linear-gradient(to bottom, #17202A, #2C3E50 )
-    padding:  100px 25px 120px
+.main-links
+  background-color: #f8f9fa
+  padding: 10px 30px
+  border-bottom: 2px solid #ddd
+
+  .main-nav
     display: flex
     justify-content: center
-    align-items: center
+    gap: 30px
+    list-style: none
+    margin: 0
+    padding: 0
+
+    .nav-item
+      position: relative
+
+      .nav-link
+        color: #000
+        font-size: 16px
+        text-decoration: none
+        padding: 10px 15px
+        display: block
+        transition: color 0.3s
+
+        &:hover
+          color: #3498DB
+
+    .dropdown-menu
+      background-color: #fff
+      border-radius: 0
+      border: none
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)
+      padding: 0
+
+      .dropdown-item
+        padding: 8px 15px
+        font-size: 14px
+        text-decoration: none
+        color: #000
+
+        &:hover
+          background-color: #f8f9fa
+
+@media (max-width: 768px)
+  .main-nav
     flex-direction: column
-    border-radius: 0 0 30% 30%
-    
-
-    .home-header-text
-        text-align: center
-        color: #fff
-        .title
-            font-size: 50px
-            font-weight: 700
-            .tagline
-                font-size: 20px
-                font-weight: 300
-
-    .home-header-search
-        margin-top: 20px
-        input
-            width: 600px
-            max-width: 100%
-            border-radius: 300px
-            padding: 15px 20px
-            text-align: center
-            border: 2x solid $primary
-            &focus
-                outline: none
-
-
-            
+    align-items: center

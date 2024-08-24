@@ -21,6 +21,7 @@ class SubcategoryController extends Controller
         return view('admin.pages.subcategories.index', [
             'subcategories' => $subcategories,
             'categories' => $categories
+
         ]);
     }
 
@@ -84,18 +85,30 @@ class SubcategoryController extends Controller
     }
 
     public function destroy($id)
-{
-    try {
-        $subcategory = Subcategory::findOrFail($id);
-        $subcategory->delete();
-        return response()->json(['message' => 'Subcategory deleted successfully.'], 200);
-    } catch (ModelNotFoundException $e) {
-        return response()->json(['message' => 'Subcategory not found.'], 404);
-    } catch (\Exception $e) {
-        // Log the error message for debugging
-        Log::error('Error deleting subcategory: ' . $e->getMessage());
-        return response()->json(['message' => 'Error deleting subcategory.'], 500);
+    {
+        try {
+            $subcategory = Subcategory::findOrFail($id);
+            $subcategory->delete();
+            return response()->json(['message' => 'Subcategory deleted successfully.'], 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'Subcategory not found.'], 404);
+        } catch (\Exception $e) {
+            // Log the error message for debugging
+            Log::error('Error deleting subcategory: ' . $e->getMessage());
+            return response()->json(['message' => 'Error deleting subcategory.'], 500);
+        }
     }
+
+    public function showSubcategory($id)
+{
+    $subcategory = Subcategory::with('products')->findOrFail($id);
+    $products = $subcategory->products()->paginate(10); // Paginate products
+
+    return view('pages.components.subcategories.show', [
+        'subcategory' => $subcategory,
+        'products' => $products  // Pass the $products variable to the view
+    ]);
 }
+
 
 }

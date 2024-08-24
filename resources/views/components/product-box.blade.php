@@ -1,4 +1,4 @@
-<a href="{{route('product', $product->id)}}" class="product-box">
+<a href="{{ route('product.show', $product->id) }}" class="product-box">
     <div class="image">
         <img src="{{ Storage::url($product->image) }}" alt="{{ $product->title }}" height="200px" width="200px">
     </div>

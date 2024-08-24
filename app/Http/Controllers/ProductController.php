@@ -19,14 +19,13 @@ class ProductController extends Controller
     }
 
     public function create()
-{
-    $categories = Category::all();
-    $subcategories = Subcategory::all(); // Fetch all subcategories
-    $colors = Color::all();
+    {
+        $categories = Category::all();
+        $subcategories = Subcategory::all(); // Fetch all subcategories
+        $colors = Color::all();
 
-    return view('admin.pages.products.create', compact('categories', 'subcategories', 'colors'));
-}
-
+        return view('admin.pages.products.create', compact('categories', 'subcategories', 'colors'));
+    }
 
     public function store(Request $request)
     {
