@@ -8,44 +8,6 @@
         box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1)
         overflow: hidden
 
-    .table
-        width: 100%
-        text-align: left
-        border-collapse: collapse
-
-        thead
-            background: $primary
-            color: #fff
-            th
-                padding: 15px
-                font-weight: 500
-                font-size: 20px
-
-        tbody
-            tr
-                td
-                    padding: 15px
-                    font-weight: 500
-                    font-size: 18px
-
-                    .cart-item-title
-                        font-weight: 500
-                        margin-bottom: 10px
-                        text-decoration: none
-                        color: $primary
-                        display: flex
-                        align-items: center
-                        gap: 20px
-
-                        img
-                            width: 50px
-
-            .cart-total
-                td
-                    font-size: 20px
-                    font-weight: 500
-                    color: $primary
-
     .cart-actions
         display: flex
         justify-content: space-between
@@ -66,3 +28,42 @@
             &:hover
                 background: darken($primary, 10%)
                 scale: 1.02
+
+.table
+    width: 100%
+    text-align: left
+    border-collapse: collapse
+
+    thead
+        background: $primary
+        color: #fff
+        th
+            padding: 15px
+            font-weight: 400
+            font-size: 17px
+
+    tbody
+        tr
+            td
+                padding: 15px
+                font-weight: 500
+                font-size: 18px
+
+                .cart-item-title
+                    font-weight: 500
+                    margin-bottom: 10px
+                    text-decoration: none
+                    color: $primary
+                    display: flex
+                    align-items: center
+                    gap: 20px
+
+                    img
+                        width: 50px
+
+        .cart-total
+            td
+                font-size: 20px
+                font-weight: 500
+                color: $primary
+

@@ -34,7 +34,7 @@
                                         <td>{{ $product->id }}</td>
                                         <td>{{ $product->title }}</td>
                                         <td>{{ $product->price }}</td>
-                                        <td>{{ $product->category->name }}</td>
+                                        <td>{{ $product->category ? $product->category->name : 'Uncategorized' }}</td>
                                         <td>
                                             @foreach ($product->colors as $color)
                                                 <span class="badge color-badge" data-color="{{$color->code}}" style="background: {{$color->code}}">{{$color->name}}</span>

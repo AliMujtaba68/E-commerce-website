@@ -19,7 +19,7 @@
             <a href="{{route('adminpanel.colors')}}">Colors</a>
         </li>
         <li>
-            <a href="">Orders</a>
+            <a href="{{route('adminpanel.orders')}}">Orders</a>
         </li>
 
         <div class="logout">

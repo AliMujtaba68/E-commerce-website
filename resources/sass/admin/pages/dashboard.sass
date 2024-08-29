@@ -1,0 +1,47 @@
+.dashboard-container
+  padding: 2rem
+
+  .page-title
+    @extend .display-4
+    color: $primary-color
+    margin-bottom: 2rem
+
+  .welcome-message
+    font-size: 1.25rem
+    margin-bottom: 3rem
+
+  .stats-cards
+    display: flex
+    flex-wrap: wrap
+    gap: 1.5rem
+
+    .card
+      flex: 1 1 calc(33.333% - 1.5rem)
+      background-color: $background-color
+      border: none
+      border-radius: 0.5rem
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
+
+      .card-body
+        padding: 1.5rem
+        text-align: center
+
+        .card-title
+          @extend .h5
+          color: $secondary-color
+          margin-bottom: 0.75rem
+
+        .card-text
+          font-size: 1.75rem
+          font-weight: bold
+          color: $text-color
+
+  .card
+    margin-bottom: 1.5rem
+    .card-header
+      background-color: $primary-color
+      color: white
+      padding: 1rem
+      border-bottom: none
+    .card-body
+      padding: 2rem

@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Jacquard+24&display=swap);
+@charset "UTF-8";
 * {
   margin: 0;
   padding: 0;
@@ -73,47 +74,43 @@ body {
 }
 
 .menu {
-  background: #17202A;
-  height: 60px;
+  background: #fff;
+  height: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 25px;
+  padding: 0 30px;
+  color: #000;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
-.logo {
-  height: 46px;
-  margin-top: 7px;
+.menu .logo {
+  height: 50px;
+  margin-top: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background: black;
+  padding: 10px;
 }
-
-ul {
+.menu ul {
   list-style-type: none;
   display: flex;
   align-items: center;
   margin: 0;
-  gap: 30px;
+  gap: 20px;
 }
-@media (max-width: 600px) {
-  ul {
-    flex-direction: column;
-    gap: 10px;
-  }
-}
-ul li a {
-  color: #fff;
-  height: 46px;
-  width: 46px;
-  font-size: 26px;
-  background: #273746;
-  border-radius: 50%;
+.menu ul li .nav-icon {
+  height: 50px;
+  width: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 28px;
+  color: #000 !important;
   text-decoration: none;
-  transition: all 0.4s ease;
+  transition: all 0.3s ease;
   position: relative;
 }
-ul li a .info-count {
+.menu ul li .nav-icon .info-count {
   width: 20px;
   height: 20px;
   background: red;
@@ -124,51 +121,94 @@ ul li a .info-count {
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 0px;
-  right: 0px;
-  transform: translate(20%, -20%);
+  top: 5px;
+  right: 20px;
 }
-ul li a:hover {
-  background: #fff;
-  color: #17202A;
+.menu ul li .nav-icon .cart-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 10px;
+}
+.menu ul li .nav-icon .cart-info span {
+  font-size: 14px;
+}
+.menu ul li .nav-icon .cart-info .cart-amount {
+  color: #ff69b4;
+}
+.menu ul li .nav-icon:hover {
+  color: #2c3e50;
+}
+.menu .home-icon::before {
+  content: "🏠";
+}
+.menu .account-icon::before {
+  content: "👤";
+}
+.menu .wishlist-icon::before {
+  content: "❤";
+  color: pink;
+}
+.menu .cart-icon::before {
+  content: "🛒";
 }
 
-.home-header {
-  background: linear-gradient(to bottom, #17202A, #2C3E50);
-  padding: 100px 25px 120px;
+@media (max-width: 600px) {
+  .menu {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+.main-links {
+  background-color: #f8f9fa;
+  padding: 10px 30px;
+  border-bottom: 2px solid #ddd;
+}
+.main-links .main-nav {
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  border-radius: 0 0 30% 30%;
+  gap: 30px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
-.home-header .home-header-text {
-  text-align: center;
-  color: #fff;
+.main-links .main-nav .nav-item {
+  position: relative;
 }
-.home-header .home-header-text .title {
-  font-size: 50px;
-  font-weight: 700;
+.main-links .main-nav .nav-item .nav-link {
+  color: #000;
+  font-size: 16px;
+  text-decoration: none;
+  padding: 10px 15px;
+  display: block;
+  transition: color 0.3s;
 }
-.home-header .home-header-text .title .tagline {
-  font-size: 20px;
-  font-weight: 300;
+.main-links .main-nav .nav-item .nav-link:hover {
+  color: #3498DB;
 }
-.home-header .home-header-search {
-  margin-top: 20px;
+.main-links .main-nav .dropdown-menu {
+  background-color: #fff;
+  border-radius: 0;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 0;
 }
-.home-header .home-header-search input {
-  width: 600px;
-  max-width: 100%;
-  border-radius: 300px;
-  padding: 15px 20px;
-  text-align: center;
-  border: 2x solid #17202A;
+.main-links .main-nav .dropdown-menu .dropdown-item {
+  padding: 8px 15px;
+  font-size: 14px;
+  text-decoration: none;
+  color: #000;
 }
-.home-header .home-header-search inputfocus {
-  outline: none;
+.main-links .main-nav .dropdown-menu .dropdown-item:hover {
+  background-color: #f8f9fa;
 }
 
+@media (max-width: 768px) {
+  .main-nav {
+    flex-direction: column;
+    align-items: center;
+  }
+}
 .products-section {
   padding: 100px 0;
 }
@@ -256,6 +296,61 @@ ul li a:hover {
 
 .account-page {
   padding: 70px 100px;
+}
+.account-page .u-box {
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 9px rgba(0, 0, 0, 0.04);
+  margin-bottom: 40px;
+  display: flex;
+  overflow: hidden;
+  justify-content: space-between;
+  align-items: center;
+}
+.account-page .u-box .user-info .user-name {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+}
+.account-page .u-box .user-info .user-email {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px;
+}
+.account-page .orders-box .orders-box-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.account-page .status-pending {
+  color: #856404;
+  background-color: #ffeeba;
+}
+.account-page .status-processing {
+  color: #004085;
+  background-color: #cce5ff;
+}
+.account-page .status-shipped {
+  color: #0b3d91;
+  background-color: #d1ecf1;
+}
+.account-page .status-completed {
+  color: #155724;
+  background-color: #d4edda;
+}
+.account-page .status-declined {
+  color: #721c24;
+  background-color: #f8d7da;
+}
+.account-page td[class^=status-] {
+  padding: 0.5em;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: 600;
 }
 
 .product-page {
@@ -396,42 +491,6 @@ ul li a:hover {
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
-.cart-page .table {
-  width: 100%;
-  text-align: left;
-  border-collapse: collapse;
-}
-.cart-page .table thead {
-  background: #17202A;
-  color: #fff;
-}
-.cart-page .table thead th {
-  padding: 15px;
-  font-weight: 500;
-  font-size: 20px;
-}
-.cart-page .table tbody tr td {
-  padding: 15px;
-  font-weight: 500;
-  font-size: 18px;
-}
-.cart-page .table tbody tr td .cart-item-title {
-  font-weight: 500;
-  margin-bottom: 10px;
-  text-decoration: none;
-  color: #17202A;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-.cart-page .table tbody tr td .cart-item-title img {
-  width: 50px;
-}
-.cart-page .table tbody .cart-total td {
-  font-size: 20px;
-  font-weight: 500;
-  color: #17202A;
-}
 .cart-page .cart-actions {
   display: flex;
   justify-content: space-between;
@@ -454,6 +513,43 @@ ul li a:hover {
   scale: 1.02;
 }
 
+.table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+.table thead {
+  background: #17202A;
+  color: #fff;
+}
+.table thead th {
+  padding: 15px;
+  font-weight: 400;
+  font-size: 17px;
+}
+.table tbody tr td {
+  padding: 15px;
+  font-weight: 500;
+  font-size: 18px;
+}
+.table tbody tr td .cart-item-title {
+  font-weight: 500;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: #17202A;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.table tbody tr td .cart-item-title img {
+  width: 50px;
+}
+.table tbody .cart-total td {
+  font-size: 20px;
+  font-weight: 500;
+  color: #17202A;
+}
+
 .checkout-page {
   padding: 50px 0;
   background: #f9f9f9;
@@ -469,6 +565,21 @@ ul li a:hover {
   margin: 0 auto;
 }
 
+.page-success {
+  padding: 50px 0;
+  text-align: center;
+}
+.page-success h2 {
+  font-size: 40px;
+  font-weight: 600;
+  color: #17202A;
+}
+.page-success h3 {
+  font-size: 30px;
+  font-weight: 300;
+  color: red;
+}
+
 .product-box {
   border-radius: 3px;
   background: #fff;
@@ -476,12 +587,31 @@ ul li a:hover {
   box-shadow: 0 8px 40px 0 rgba(49, 32, 138, 0.05);
   text-align: center;
   max-width: 270px;
-  text-decoration: none;
   transition: all 0.4s ease;
 }
 .product-box:hover {
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
   transform: translateY(-5px);
+}
+.product-box:hover .image .add-to-wishlist {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 200px;
+  padding: 10px 30px;
+  width: 200px;
+  max-width: 90%;
+  font-weight: 400;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+.product-box:hover .image .add-to-wishlist:hover {
+  background: #ff1fe1;
+  color: #fff;
 }
 .product-box .image {
   background: #f6f7fb;
@@ -492,6 +622,20 @@ ul li a:hover {
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
+  position: relative;
+}
+.product-box .image img {
+  max-width: 100%;
+  max-height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.product-box .image .add-to-wishlist {
+  display: none;
+}
+.product-box a {
+  color: #0c5a61;
+  text-decoration: none;
 }
 .product-box .product-title {
   font-size: 20px;

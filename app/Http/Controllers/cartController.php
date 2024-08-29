@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Color;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
@@ -30,7 +29,7 @@ class CartController extends Controller
         $cart = session()->get('cart');
         $key = $this->checkItemInCart($item);
 
-        if ($key != -1) {
+        if ($key !== -1) {
             // If the item exists, increment the quantity
             $cart[$key]['quantity'] += (int)$request->quantity;
         } else {
@@ -48,7 +47,7 @@ class CartController extends Controller
     public function checkItemInCart($item)
     {
         // Retrieve the cart session
-        $cart = session()->get('cart');
+        $cart = session()->get('cart', []);
 
         // Check if the item exists in the cart
         foreach ($cart as $key => $val) {
@@ -65,14 +64,15 @@ class CartController extends Controller
 
     public function removeFromCart($key)
     {
-        if(session()->has('cart'))
-        {
+        if (session()->has('cart')) {
             $cart = session()->get('cart');
-            array_splice($cart, $key, 1);
-            session()->put('cart', $cart);
-            return back()->with('removedFromCart', 'Success! Product has been removed from cart');
+            if (isset($cart[$key])) {
+                array_splice($cart, $key, 1);
+                session()->put('cart', $cart);
+                return back()->with('removedFromCart', 'Success! Product has been removed from cart');
+            }
         }
 
-        return back();
+        return back()->with('error', 'Error: Item not found in cart');
     }
 }

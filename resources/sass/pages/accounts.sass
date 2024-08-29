@@ -1,3 +1,62 @@
+// Account Page Styles
 .account-page
-    padding: 70px 100px
+  padding: 70px 100px
 
+  .u-box
+    background: #fff
+    padding: 30px
+    border-radius: 8px
+    box-shadow: 0 0 9px rgba(0, 0, 0, 0.04)
+    margin-bottom: 40px
+    display: flex
+    overflow: hidden
+    justify-content: space-between
+    align-items: center
+
+    .user-info
+      .user-name
+        font-size: 24px
+        font-weight: 600
+        color: #333
+        margin-bottom: 10px
+
+      .user-email
+        font-size: 16px
+        color: #666
+        margin-bottom: 20px
+
+  .orders-box
+    .orders-box-title
+      font-size: 24px
+      font-weight: 600
+      color: #333
+      margin-bottom: 20px
+      text-align: center
+
+  // Status Classes
+  .status-pending
+    color: #856404
+    background-color: #ffeeba
+
+  .status-processing
+    color: #004085
+    background-color: #cce5ff
+
+  .status-shipped
+    color: #0b3d91
+    background-color: #d1ecf1
+
+  .status-completed
+    color: #155724
+    background-color: #d4edda
+
+  .status-declined
+    color: #721c24
+    background-color: #f8d7da
+
+  // Additional Styling
+  td[class^="status-"]
+    padding: 0.5em
+    border-radius: 4px
+    text-align: center
+    font-weight: 600

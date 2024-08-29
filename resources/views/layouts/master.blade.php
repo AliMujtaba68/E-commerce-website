@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <!-- Include CSRF token meta tag -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @yield('head')
 </head>
 <body>
-    @include('layouts.partials.nav') 
+    @include('layouts.partials.nav')
     <main class="page">
         @yield('content')
     </main>

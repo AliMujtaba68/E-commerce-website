@@ -1,56 +1,84 @@
 .menu
-    background: $primary
-    height: 60px
-    display: flex
-    justify-content: space-between
-    align-items: center
-    padding: 0 25px
+  background: #fff
+  height: 80px
+  display: flex
+  justify-content: space-between
+  align-items: center
+  padding: 0 30px
+  color: #000
+  position: relative
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2)
 
-.logo
-    height: 46px
-    margin-top: 7px
+  .logo
+    height: 50px
+    margin-top: 10px
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2)
+    background: black
+    padding: 10px
 
-ul
+  ul
     list-style-type: none
     display: flex
     align-items: center
     margin: 0
-    gap: 30px
+    gap: 20px
 
-    @media (max-width: 600px)
-        flex-direction: column
-        gap: 10px
+    li
+      .nav-icon
+        height: 50px
+        width: 50px
+        display: flex
+        justify-content: center
+        align-items: center
+        font-size: 28px
+        color: #000 !important  // Force icon color to black
+        text-decoration: none
+        transition: all 0.3s ease
+        position: relative
 
-    li 
-        a
-            color: #fff
-            height: 46px
-            width: 46px
-            font-size: 26px
-            background: #273746
-            border-radius: 50%
-            display: flex
-            justify-content: center
-            align-items: center
-            text-decoration: none
-            transition: all 0.4s ease
-            position: relative
+        .info-count
+          width: 20px
+          height: 20px
+          background: red
+          border-radius: 50%
+          color: #fff
+          font-size: 12px
+          display: flex
+          justify-content: center
+          align-items: center
+          position: absolute
+          top: 5px
+          right: 20px
 
-            .info-count
-                width: 20px
-                height: 20px
-                background: red
-                border-radius: 50%
-                color: #fff
-                font-size: 12px
-                display: flex
-                justify-content: center
-                align-items: center
-                position: absolute
-                top: 0px
-                right: 0px
-                transform: translate(20%, -20%)
+        .cart-info
+          display: flex
+          flex-direction: column
+          align-items: center
+          margin-left: 10px
 
-            &:hover
-                background: #fff
-                color: $primary
+          span
+            font-size: 14px
+
+          .cart-amount
+            color: #ff69b4
+
+        &:hover
+          color: #2c3e50 // Darker color on hover
+
+  .home-icon::before
+    content: "\1F3E0" // Unicode for house icon
+
+  .account-icon::before
+    content: "\1F464" // Unicode for person icon
+
+  .wishlist-icon::before
+    content: "\2764" // Unicode for heart icon
+    color: pink
+
+  .cart-icon::before
+    content: "\1F6D2" // Unicode for shopping cart icon
+
+@media (max-width: 600px)
+  .menu
+    flex-direction: column
+    gap: 15px

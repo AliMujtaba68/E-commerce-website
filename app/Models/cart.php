@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Log;
+
 class Cart
 {
     // Convert cents to formatted price
@@ -52,10 +54,19 @@ class Cart
             if (isset($item['product_id']) && isset($item['quantity'])) {
                 $product = \App\Models\Product::find($item['product_id']);
                 if ($product) {
-                    $total += $product->price * $item['quantity'];
+                    $price = $product->price;
+                    $total += $price * $item['quantity'];
+                    // Debugging output
+                    Log::info("Product ID: {$item['product_id']}, Price: $price, Quantity: {$item['quantity']}, Item Total: " . ($price * $item['quantity']));
+                } else {
+                    Log::warning("Product with ID {$item['product_id']} not found.");
                 }
+            } else {
+                Log::warning("Item missing 'product_id' or 'quantity': " . json_encode($item));
             }
         }
-        return '$' . self::centsToPrice($total);
+        $formattedTotal = self::centsToPrice($total);
+        Log::info("Total Cart Amount: $formattedTotal");
+        return '$' . $formattedTotal;
     }
 }
