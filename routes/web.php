@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\DashboardController;
 
 // Public Routes
 Route::get('/', [PagesController::class, 'home'])->name('home');
@@ -32,9 +33,9 @@ Route::get('/payment/cancel', [PagesController::class, 'paymentCancel'])->name('
 Route::post('/add-to-cart/{id}', [CartController::class, 'addToCart'])->name('addToCart');
 Route::delete('/remove-from-cart/{id}', [CartController::class, 'removeFromCart'])->name('removeFromCart');
 
+// Wishlist Routes
 Route::post('/add-to-wishlist/{id}', [WishlistController::class, 'post'])->name('addToWishlist')->middleware('auth');
 Route::post('/remove-from-wishlist/{id}', [WishlistController::class, 'remove'])->name('removeFromWishlist')->middleware('auth');
-
 
 // Authentication Routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('show.login')->middleware('guest');
@@ -54,11 +55,14 @@ Route::get('/db-check', function () {
 });
 
 // Admin Panel Routes
-Route::group(['prefix' => 'adminpanel', 'middleware' => 'admin'], function() {
-    Route::get('/', [AdminController::class, 'dashboard'])->name('adminpanel');
+Route::prefix('adminpanel')->middleware('admin')->group(function() {
+    Route::get('/', [AdminController::class, 'dashboard'])->name('adminpanel.dashboard');
+
+    // Dashboard Data Route
+    Route::get('/dashboard/data', [DashboardController::class, 'getData'])->name('adminpanel.dashboard.data');
 
     // Products
-    Route::group(['prefix' => 'products'], function ()  {
+    Route::prefix('products')->group(function ()  {
         Route::get('/', [ProductController::class, 'index'])->name('adminpanel.products');
         Route::get('/create', [ProductController::class, 'create'])->name('adminpanel.products.create');
         Route::post('/create', [ProductController::class, 'store'])->name('adminpanel.products.store');
@@ -68,21 +72,21 @@ Route::group(['prefix' => 'adminpanel', 'middleware' => 'admin'], function() {
     });
 
     // Categories
-    Route::group(['prefix' => 'categories'], function () {
+    Route::prefix('categories')->group(function () {
         Route::get('/', [CategoryController::class, 'index'])->name('adminpanel.categories');
         Route::post('/', [CategoryController::class, 'store'])->name('adminpanel.category.store');
         Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('adminpanel.category.destroy');
     });
 
     // Colors
-    Route::group(['prefix' => 'colors'], function () {
+    Route::prefix('colors')->group(function () {
         Route::get('/', [ColorController::class, 'index'])->name('adminpanel.colors');
         Route::post('/', [ColorController::class, 'store'])->name('adminpanel.color.store');
         Route::delete('/{id}', [ColorController::class, 'destroy'])->name('adminpanel.color.destroy');
     });
 
     // Orders
-    Route::group(['prefix' => 'orders'], function () {
+    Route::prefix('orders')->group(function () {
         Route::get('/', [OrderController::class, 'index'])->name('adminpanel.orders');
         Route::get('/{id}', [OrderController::class, 'view'])->name('adminpanel.orders.view');
         Route::post('/{id}', [OrderController::class, 'updateStatus'])->name('adminpanel.orders.status.update');

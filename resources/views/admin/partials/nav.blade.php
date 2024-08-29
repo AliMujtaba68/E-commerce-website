@@ -7,7 +7,7 @@
 
     <ul>
         <li>
-            <a href="">Dashboard</a>
+            <a href="{{route('adminpanel.dashboard')}}">Dashboard</a>
         </li>
         <li>
             <a href="{{route('adminpanel.products')}}">Products</a>
