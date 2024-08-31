@@ -29,38 +29,36 @@ class ProductController extends Controller
     // store
     public function store(Request $request)
     {
-        DB::transaction(function () use ($request) {
-            try {
-                $request->validate([
-                    'title' => 'required|max:255',
-                    'description' => 'required',
-                    'price' => 'required|numeric',
-                    'category_id' => 'required|exists:categories,id',
-                    'colors' => 'required|array',
-                    'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-                ]);
+        try {
+            $request->validate([
+                'title' => 'required|max:255',
+                'description' => 'required',
+                'price' => 'required|numeric',
+                'category_id' => 'required|exists:categories,id',
+                'colors' => 'required|array',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ]);
 
-                $image_name = 'products/' . time() . rand(0, 9999) . '.' . $request->image->getClientOriginalExtension();
-                $request->image->storeAs('public', $image_name);
+            $image_name = 'products/' . time() . rand(0, 9999) . '.' . $request->image->getClientOriginalExtension();
+            $request->image->storeAs('public', $image_name);
 
-                $product = Product::create([
-                    'title' => $request->title,
-                    'description' => $request->description,
-                    'price' => $request->price * 100,
-                    'category_id' => $request->category_id,
-                    'image' => $image_name
-                ]);
+            $product = Product::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'price' => $request->price * 100,
+                'category_id' => $request->category_id,
+                'image' => $image_name
+            ]);
 
-                $product->colors()->attach($request->colors);
+            $product->colors()->attach($request->colors);
 
-                return response()->json(['success' => true]);
-            } catch (\Illuminate\Validation\ValidationException $e) {
-                return response()->json(['success' => false, 'message' => $e->validator->errors()->first()]);
-            } catch (\Exception $e) {
-                Log::error('Product creation error: ' . $e->getMessage());
-                return response()->json(['success' => false, 'message' => 'An error occurred while creating the product.']);
-            }
-        });
+            return response()->json(['success' => true]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(['success' => false, 'message' => $e->validator->errors()->first()]);
+        } catch (\Exception $e) {
+            Log::error('Product creation error: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'An error occurred while creating the product.']);
+        }
     }
 
     // edit
@@ -75,65 +73,95 @@ class ProductController extends Controller
     // update
     public function update(Request $request, $id)
     {
-        DB::transaction(function () use ($request, $id) {
-            try {
-                $request->validate([
-                    'title' => 'required|max:255',
-                    'description' => 'required',
-                    'price' => 'required|numeric',
-                    'category_id' => 'required|exists:categories,id',
-                    'colors' => 'required|array',
-                    'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-                ]);
+        try {
+            $request->validate([
+                'title' => 'required|max:255',
+                'description' => 'required',
+                'price' => 'required|numeric',
+                'category_id' => 'required|exists:categories,id',
+                'colors' => 'required|array',
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ]);
 
-                $product = Product::findOrFail($id);
-                $image_name = $product->image;
+            $product = Product::findOrFail($id);
+            $image_name = $product->image;
 
-                if ($request->image) {
-                    $image_name = 'products/' . time() . rand(0, 9999) . '.' . $request->image->getClientOriginalExtension();
-                    $request->image->storeAs('public', $image_name);
-                }
-
-                $product->update([
-                    'title' => $request->title,
-                    'description' => $request->description,
-                    'price' => $request->price * 100,
-                    'category_id' => $request->category_id,
-                    'image' => $image_name
-                ]);
-
-                $product->colors()->sync($request->colors);
-
-                return response()->json(['success' => true]);
-            } catch (\Illuminate\Validation\ValidationException $e) {
-                return response()->json(['success' => false, 'message' => $e->validator->errors()->first()]);
-            } catch (\Exception $e) {
-                Log::error('Product update error: ' . $e->getMessage());
-                return response()->json(['success' => false, 'message' => 'An error occurred while updating the product.']);
+            if ($request->image) {
+                $image_name = 'products/' . time() . rand(0, 9999) . '.' . $request->image->getClientOriginalExtension();
+                $request->image->storeAs('public', $image_name);
             }
-        });
+
+            $product->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                'price' => $request->price * 100,
+                'category_id' => $request->category_id,
+                'image' => $image_name
+            ]);
+
+            $product->colors()->sync($request->colors);
+
+            return response()->json(['success' => true]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(['success' => false, 'message' => $e->validator->errors()->first()]);
+        } catch (\Exception $e) {
+            Log::error('Product update error: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'An error occurred while updating the product.']);
+        }
     }
 
     // delete
     public function destroy($id)
     {
-        DB::transaction(function () use ($id) {
-            try {
-                $product = Product::findOrFail($id);
+        try {
+            $product = Product::findOrFail($id);
 
-                // Check if the category is null, if so, reassign to "Uncategorized"
-                if ($product->category === null) {
-                    $uncategorizedCategory = Category::firstOrCreate(['name' => 'Uncategorized']);
-                    $product->category_id = $uncategorizedCategory->id;
-                    $product->save();
-                }
-
-                $product->delete();
-                return response()->json(['success' => true], 200);
-            } catch (\Exception $e) {
-                Log::error('Product deletion error: ' . $e->getMessage());
-                return response()->json(['error' => 'Failed to delete product'], 500);
+            // Check if the category is null, if so, reassign to "Uncategorized"
+            if ($product->category === null) {
+                $uncategorizedCategory = Category::firstOrCreate(['name' => 'Uncategorized']);
+                $product->category_id = $uncategorizedCategory->id;
+                $product->save();
             }
-        });
+
+            $product->delete();
+            return response()->json(['success' => true], 200);
+        } catch (\Exception $e) {
+            Log::error('Product deletion error: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to delete product'], 500);
+        }
     }
+
+    public function getCategories()
+{
+    $categories = Category::all();
+    return response()->json($categories);
+}
+
+public function searchProducts(Request $request)
+{
+    $query = $request->input('query');
+    $category = $request->input('category');
+    $priceOrder = $request->input('price');
+
+    $products = Product::where('name', 'like', "%$query%");
+
+    if ($category) {
+        $products->where('category_id', $category);
+    }
+
+    if ($priceOrder) {
+        $products->orderBy('price', $priceOrder === 'low' ? 'asc' : 'desc');
+    }
+
+    return response()->json($products->get());
+}
+
+    public function review_user($id)
+    {
+        $product = Product::with('reviews.user')->findOrFail($id);
+        return view('product.show', compact('product'));
+    }
+
+
+
 }

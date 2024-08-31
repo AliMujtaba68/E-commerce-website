@@ -1,47 +1,49 @@
-.main-links
-  background-color: #f8f9fa
-  padding: 10px 30px
-  border-bottom: 2px solid #ddd
+// Carousel custom styling
+.custom-carousel
+  padding: 50px 0
+  width: 1200px
+  height: 500px
+  margin: -15px auto 0 auto // Reduced top margin for less space between the carousel and the top navigation bar
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5)) // Add a drop shadow for depth
+  overflow: hidden // Ensure no overflow beyond the container
 
-  .main-nav
-    display: flex
-    justify-content: center
-    gap: 30px
-    list-style: none
-    margin: 0
-    padding: 0
+  .carousel-item
+    position: relative
+    img
+      width: 100% // Ensure the image fits within the carousel
+      height: 100% // Scale the image to fill the carousel height
+      object-fit: cover // Ensure the image covers the entire area without distortion
+      filter: brightness(70%) // Dim the image for better text contrast
+      transition: filter 0.3s ease // Smooth transition for filter change
 
-    .nav-item
-      position: relative
+    .carousel-caption
+      position: absolute
+      bottom: 20px // Position the caption 20px from the bottom
+      right: 20px // Position the caption 20px from the right
+      text-align: right // Align text to the right
+      transform: none // Remove the transform for centering
+      left: auto // Reset left to auto
+      color: #fff // Ensure caption text is white for contrast
 
-      .nav-link
-        color: #000
-        font-size: 16px
-        text-decoration: none
-        padding: 10px 15px
-        display: block
-        transition: color 0.3s
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon
+    background-color: rgba(0, 0, 0, 0.5) // Darker controls for visibility
+    border-radius: 50%
+    width: 40px // Set width of the control icons
+    height: 40px // Set height of the control icons
+    background-size: 50% // Adjust size of control icons
 
-        &:hover
-          color: #3498DB
+// Custom button styling
+.custom-button
+  background-color: #007bff
+  border: none
+  padding: 10px 20px
+  font-size: 18px
+  color: #fff
+  text-transform: uppercase
+  border-radius: 5px
+  transition: background-color 0.3s ease, transform 0.3s ease // Smooth transition for hover effect
 
-    .dropdown-menu
-      background-color: #fff
-      border-radius: 0
-      border: none
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)
-      padding: 0
-
-      .dropdown-item
-        padding: 8px 15px
-        font-size: 14px
-        text-decoration: none
-        color: #000
-
-        &:hover
-          background-color: #f8f9fa
-
-@media (max-width: 768px)
-  .main-nav
-    flex-direction: column
-    align-items: center
+  &:hover
+    background-color: #0056b3
+    transform: scale(1.05) // Slightly scale the button on hover for a depth effect

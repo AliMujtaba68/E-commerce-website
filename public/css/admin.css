@@ -71,7 +71,7 @@ body {
   background-color: #f4f6f9;
   border: none;
   border-radius: 0.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 .dashboard-container .stats-cards .card .card-body {
   padding: 1.5rem;
@@ -86,16 +86,17 @@ body {
   font-weight: bold;
   color: #2c3e50;
 }
-.dashboard-container .card {
+
+.card {
   margin-bottom: 1.5rem;
 }
-.dashboard-container .card .card-header {
+.card .card-header {
   background-color: #3498db;
   color: white;
   padding: 1rem;
   border-bottom: none;
 }
-.dashboard-container .card .card-body {
+.card .card-body {
   padding: 2rem;
 }
 

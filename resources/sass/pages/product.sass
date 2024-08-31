@@ -3,12 +3,13 @@
 
     .product-page-row
         display: flex
-        flex-wrap: nowrap  // Prevent wrapping on larger screens
-        gap: 20px  // Space between image and details
+        flex-wrap: nowrap
+        gap: 20px
 
         .product-page-image
-            flex: 1  // Take up space proportionally
-            max-width: 50%  // Half width on larger screens
+            flex: 1
+            max-width: 50%
+            max-height: 400px
             display: flex
             justify-content: center
             align-items: center
@@ -17,10 +18,16 @@
             border: 2px solid #ddd
             border-radius: 8px
             background: #fff
+            overflow: hidden
+
+            img
+                max-width: 100%
+                max-height: 100%
+                object-fit: contain
 
         .product-page-details
-            flex: 1  // Take up space proportionally
-            max-width: 50%  // Half width on larger screens
+            flex: 1
+            max-width: 50%
 
             .p-title
                 color: $primary
@@ -58,6 +65,7 @@
 
             .p-form
                 margin-bottom: 20px
+
                 label
                     display: block
                     color: black
@@ -65,33 +73,18 @@
                     font-weight: 700
                     margin-bottom: 10px
 
-                .p-colors
-                    select
-                        min-width: 200px
-                        padding: 5px 20px
-                        height: 40px
-                        border-radius: 200px
-                        text-align: center
-                        background: #fff
-                        border: 1px solid #0c5a61
-                        color: $primary
-                        font-weight: 700
-                        font-size: 16px
-                        appearance: none
-
-                .p-quantity
-                    input
-                        min-width: 200px
-                        padding: 5px 20px
-                        height: 40px
-                        border-radius: 200px
-                        text-align: center
-                        background: #fff
-                        border: 1px solid #0c5a61
-                        color: $primary
-                        font-weight: 700
-                        font-size: 16px
-                        appearance: none
+                select, input
+                    min-width: 200px
+                    padding: 5px 20px
+                    height: 40px
+                    border-radius: 200px
+                    text-align: center
+                    background: #fff
+                    border: 1px solid #0c5a61
+                    color: $primary
+                    font-weight: 700
+                    font-size: 16px
+                    appearance: none
 
             .btn-cart
                 background-color: $primary
@@ -111,15 +104,91 @@
                     transform: translateY(-5px)
                     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5)
 
-    // Responsive styles
-    @media (max-width: 768px)
-        .product-page-row
-            flex-direction: column  // Stack vertically on small screens
-            gap: 0  // Remove space between image and details
+    .review-section
+        margin-top: 30px
+        padding: 20px
+        border: 1px solid #ddd
+        border-radius: 8px
+        background: #f9f9f9
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2)
+        text-align: center
 
-        .product-page-image, .product-page-details
-            max-width: 100%  // Full width on small screens
-            width: 100%
-            margin: 0  // Remove margin on small screens
+        h3
+            margin-bottom: 20px
+            font-weight: 300
 
+        .form-group
+            margin-bottom: 15px
 
+            label
+                display: block
+                margin-bottom: 5px
+
+            select, textarea
+                width: 100%
+                padding: 10px
+                border-radius: 5px
+                border: 1px solid #ddd
+
+        .btn-primary
+            background-color: $primary
+            color: #fff
+            padding: 10px 20px
+            border-radius: 5px
+            border: none
+            cursor: pointer
+
+            &:hover
+                background-color: darken($primary, 10%)
+
+    .reviews
+        margin-top: 30px
+
+        h3
+            margin-bottom: 20px
+            font-weight: 300
+
+        .review
+            padding: 15px
+            border: 1px solid #ddd
+            border-radius: 8px
+            margin-bottom: 10px
+            background: #fff
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4)
+            position: relative
+
+            &:nth-child(even)
+                float: right
+                clear: both
+                margin-left: 50px
+                max-width: 45%
+
+            &:nth-child(odd)
+                float: left
+                clear: both
+                margin-right: 50px
+                max-width: 45%
+
+            .review-header
+                display: flex
+                align-items: center
+                margin-bottom: 10px
+
+                .review-user
+                    color: #0c5a61
+                    font-size: 18px
+                    font-weight: 400
+                    margin-right: 10px
+
+                .review-rating
+                    display: flex
+                    align-items: center
+
+                    .star
+                        font-size: 16px
+                        color: #ffcc00
+                        margin-right: 2px
+
+            .review-content
+                color: #333
+                font-size: 16px

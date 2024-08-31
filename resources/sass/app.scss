@@ -5,6 +5,7 @@
 
 
 @import 'partials/_nav.sass';
+@import 'partials/_footer.sass';
 
 // PAGES
 @import './pages/home.sass';
@@ -16,6 +17,11 @@
 @import './pages/success.sass';
 
 
+
 //COMPONENTS
 @import './pages/components/productBox.sass';
 @import './pages/components/popUp.sass';
+@import './pages/components/contact.sass';
+@import './pages/components/about.sass';
+@import './pages/components/privacy.sass';
+@import './pages/components/terms.sass';

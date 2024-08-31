@@ -8,7 +8,10 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\WishlistController;
@@ -21,6 +24,10 @@ Route::get('/wish-list', [PagesController::class, 'wishlist'])->name('wishlist')
 Route::get('/account', [PagesController::class, 'account'])->name('account')->middleware('auth');
 Route::get('/checkout', [PagesController::class, 'checkout'])->name('checkout')->middleware('auth');
 Route::get('/products/{id}', [PagesController::class, 'product'])->name('product');
+Route::get('/contact', [PagesController::class, 'contact'])->name('contact.page');
+Route::get('/about', [PagesController::class, 'about'])->name('about.page');
+Route::get('/privacy', [PagesController::class, 'privacy'])->name('privacy.page');
+Route::get('/terms', [PagesController::class, 'terms'])->name('terms.page');
 
 // Checkout Route
 Route::post('/create-checkout-session', [CheckoutController::class, 'createCheckoutSession'])->name('createCheckoutSession')->middleware('auth');
@@ -69,6 +76,8 @@ Route::prefix('adminpanel')->middleware('admin')->group(function() {
         Route::get('/{id}', [ProductController::class, 'edit'])->name('adminpanel.products.edit');
         Route::put('/{id}', [ProductController::class, 'update'])->name('adminpanel.products.update');
         Route::delete('/{id}', [ProductController::class, 'destroy'])->name('adminpanel.products.destroy');
+        Route::get('/product/{id}/reviews', [ProductController::class, 'review_user'])->name('product.reviews');
+
     });
 
     // Categories
@@ -91,4 +100,7 @@ Route::prefix('adminpanel')->middleware('admin')->group(function() {
         Route::get('/{id}', [OrderController::class, 'view'])->name('adminpanel.orders.view');
         Route::post('/{id}', [OrderController::class, 'updateStatus'])->name('adminpanel.orders.status.update');
     });
+
+    // Reviews
+    Route::post('/product/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 });

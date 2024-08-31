@@ -1,3 +1,8 @@
+@extends('layouts.admin')
+
+@section('title', 'Products')
+@section('content')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,23 +12,26 @@
     <title>Create Product</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        /* Add this CSS */
         body {
-            padding-top: 70px; /* Adjust this value to match the height of your navbar */
+            padding-top: 5px; /* Adjust this value to match the height of your navbar */
         }
-
         .page-title {
             text-align: center;
             margin-bottom: 2rem;
         }
-
         .centered-card {
             max-width: 800px;
             margin: 0 auto;
         }
-
         .btn-back {
             margin-bottom: 1rem;
+        }
+        #messageArea {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            transition: opacity 0.5s ease;
         }
     </style>
 </head>
@@ -103,7 +111,7 @@
                                         <label for="colors">Colors</label> &nbsp; &nbsp;
                                         @foreach ($colors as $color)
                                             <div class="form-check form-check-inline">
-                                                <input type="checkbox" name="colors[]" class="form-check-input" value="{{ $color->id }}">
+                                                <input type="checkbox" name="colors[]" class="form-check-input" value="{{ $color->id }}" {{ in_array($color->id, old('colors', [])) ? 'checked' : '' }}>
                                                 <label for="{{ $color->name }}" class="form-check-label">{{ $color->name }}</label>
                                             </div>
                                         @endforeach
@@ -138,23 +146,16 @@
         </div>
     </div>
 
+    <div id="messageArea" class="alert alert-success d-none" role="alert"></div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM fully loaded and parsed');
-
             const submitButton = document.getElementById('submitBtn');
             const form = document.getElementById('createProductForm');
 
-            if (submitButton && form) {
-                console.log('Submit button and form element found');
-
-                submitButton.addEventListener('click', function() {
-                    console.log('Submit button clicked');
-                    submitForm();
-                });
-            } else {
-                console.error('Submit button or form element not found');
-            }
+            submitButton.addEventListener('click', function() {
+                submitForm();
+            });
 
             function submitForm() {
                 const formData = new FormData(form);
@@ -168,8 +169,13 @@
                 })
                 .then(response => response.json())
                 .then(data => {
+                    const messageArea = document.getElementById('messageArea');
                     if (data.success) {
-                        window.location.href = `{{ route('adminpanel.products') }}`;
+                        messageArea.innerText = 'Product created successfully!';
+                        messageArea.classList.remove('d-none');
+                        setTimeout(() => {
+                            window.location.href = `{{ route('adminpanel.products') }}`;
+                        }, 2000); // Redirect after 2 seconds
                     } else {
                         console.error('Error:', data.message);
                     }
@@ -182,3 +188,5 @@
     </script>
 </body>
 </html>
+
+@endsection

@@ -5,6 +5,7 @@
 
         @include('pages.components.home.header')
 
+
         <section class="products-section">
             <div class="container">
 

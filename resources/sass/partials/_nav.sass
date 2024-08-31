@@ -6,13 +6,15 @@
   align-items: center
   padding: 0 30px
   color: #000
-  position: relative
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2)
+  position: sticky // Make the menu sticky
+  top: 0 // Stick to the top of the viewport
+  z-index: 1000 // Ensure it stays above other content
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) // Enhanced drop shadow for better visibility
 
   .logo
     height: 50px
     margin-top: 10px
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2)
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4) // Slightly more visible shadow for the logo
     background: black
     padding: 10px
 
