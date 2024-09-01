@@ -48,13 +48,23 @@ class PagesController extends Controller
         return view('pages.product', ['product' => $product]);
     }
 
-    public function paymentSuccess()
+    public function contact()
     {
-        return response()->json(['message' => 'Order has been placed'], 200);
+        return view('pages.components.contact'); // Replace with your contact view
     }
 
-    public function paymentCancel()
+    public function about()
     {
-        return response()->json(['message' => 'Payment was cancelled'], 200);
+        return view('pages.components.about'); // Replace with your about view
+    }
+
+    public function privacy()
+    {
+        return view('pages.components.privacy'); // Replace with your privacy view
+    }
+
+    public function terms()
+    {
+        return view('pages.components.terms'); // Replace with your terms view
     }
 }

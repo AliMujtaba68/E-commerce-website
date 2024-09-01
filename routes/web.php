@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\DashboardController;
 
 // Public Routes
 Route::get('/', [PagesController::class, 'home'])->name('home');
@@ -20,6 +21,10 @@ Route::get('/wish-list', [PagesController::class, 'wishlist'])->name('wishlist')
 Route::get('/account', [PagesController::class, 'account'])->name('account')->middleware('auth');
 Route::get('/checkout', [PagesController::class, 'checkout'])->name('checkout')->middleware('auth');
 Route::get('/products/{id}', [PagesController::class, 'product'])->name('product');
+Route::get('/contact', [PagesController::class, 'contact'])->name('contact.page');
+Route::get('/about', [PagesController::class, 'about'])->name('about.page');
+Route::get('/privacy', [PagesController::class, 'privacy'])->name('privacy.page');
+Route::get('/terms', [PagesController::class, 'terms'])->name('terms.page');
 
 // Checkout Route
 Route::post('/create-checkout-session', [CheckoutController::class, 'createCheckoutSession'])->name('createCheckoutSession')->middleware('auth');
@@ -54,8 +59,12 @@ Route::get('/db-check', function () {
 });
 
 // Admin Panel Routes
-Route::group(['prefix' => 'adminpanel', 'middleware' => 'admin'], function() {
-    Route::get('/', [AdminController::class, 'dashboard'])->name('adminpanel');
+Route::prefix('adminpanel')->middleware('admin')->group(function() {
+    Route::get('/', [AdminController::class, 'dashboard'])->name('adminpanel.dashboard');
+
+    // Dashboard Data Route
+    Route::get('/dashboard/data', [DashboardController::class, 'getData'])->name('adminpanel.dashboard.data');
+
 
     // Products
     Route::group(['prefix' => 'products'], function ()  {
