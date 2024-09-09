@@ -1,0 +1,19 @@
+.wishlist-items
+    padding: 50px 0
+
+    .wishlist-product
+        display: flex
+        flex-wrap: wrap
+        gap: 30px  // Adjust the gap between wishlist items
+        justify-content: center  // Center align items horizontally
+
+        @media (max-width: 768px)
+            flex-direction: column  // Stack items vertically on smaller screens
+
+    .product-box
+        max-width: 250px
+        flex: 1 1 calc(33.333% - 30px)  // Set width for each product box with space between
+        margin: 10px  // Margin around each product box
+
+        @media (max-width: 768px)
+            flex: 1 1 100%  // Full width on small screens

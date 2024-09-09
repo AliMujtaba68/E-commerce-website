@@ -15,17 +15,14 @@
                 <h2 class="sub-title">Our Team</h2>
                 <div class="team-members">
                     <div class="team-member">
-                        <img src="https://via.placeholder.com/150" alt="Team Member 1" class="team-member-img">
                         <h3 class="team-member-name">Ali Mujtaba</h3>
                         <p class="team-member-role">CEO</p>
                     </div>
                     <div class="team-member">
-                        <img src="https://via.placeholder.com/150" alt="Team Member 2" class="team-member-img">
                         <h3 class="team-member-name">Ahtisham ul Haq</h3>
                         <p class="team-member-role">CTO</p>
                     </div>
                     <div class="team-member">
-                        <img src="https://via.placeholder.com/150" alt="Team Member 3" class="team-member-img">
                         <h3 class="team-member-name">Farooq Ahmed</h3>
                         <p class="team-member-role">COO</p>
                     </div>

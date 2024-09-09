@@ -75,4 +75,6 @@ class CartController extends Controller
 
         return back()->with('error', 'Error: Item not found in cart');
     }
+
+
 }

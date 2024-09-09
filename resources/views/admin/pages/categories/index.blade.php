@@ -188,7 +188,6 @@
 
                         <td>
 
-                            <a href="#" class="btn btn-primary btn-sm">Edit</a>
 
                             <button type="button" class="btn btn-danger btn-sm deleteCategoryBtn">Delete</button>
 
